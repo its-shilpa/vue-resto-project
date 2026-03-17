@@ -1,0 +1,312 @@
+{
+  "users": [
+    {
+      "id": "fd37",
+      "name": "Shilpa Mukherjee",
+      "email": "shilpa@test.com",
+      "password": "shilpa@123",
+      "role": "admin",
+      "favorites": [
+        "a9df"
+      ],
+      "isLoggedIn": true
+    },
+    {
+      "id": "0e18",
+      "name": "Swati Das",
+      "email": "swati@gmail.com",
+      "password": "swati@123",
+      "role": "user",
+      "favorites": []
+    },
+    {
+      "name": "Shreya Roy",
+      "email": "shreya@gmail.com",
+      "password": "123456",
+      "role": "user",
+      "id": "cd1f",
+      "favorites": [],
+      "isLoggedIn": true
+    },
+    {
+      "id": "03fb",
+      "name": "Anushka",
+      "email": "anu@gmail.com",
+      "password": "anu@123",
+      "role": "user",
+      "favorites": [],
+      "isLoggedIn": true
+    },
+    {
+      "id": "a10d",
+      "name": "Sam",
+      "email": "sam@gmail.com",
+      "password": "12345",
+      "role": "user",
+      "favorites": [
+        "b4bf"
+      ],
+      "isLoggedIn": true
+    },
+    {
+      "name": "Arun",
+      "email": "test@gmail.com",
+      "password": "test@gmail.com",
+      "role": "user",
+      "id": "62ae",
+      "favorites": [],
+      "isLoggedIn": false
+    }
+  ],
+  "resturent": [
+    {
+      "name": "McDonald's",
+      "contact": "9784512458",
+      "address": "Eco Space, Kolkata",
+      "openhour": "10AM-8PM",
+      "image": "https://images.pexels.com/photos/11873775/pexels-photo-11873775.jpeg",
+      "id": "df18",
+      "banner": "https://images.pexels.com/photos/11873775/pexels-photo-11873775.jpeg",
+      "popularDishes": [
+        {
+          "name": "Chicken Bowl",
+          "price": 499,
+          "image": "https://images.pexels.com/photos/60616/fried-chicken-chicken-fried-crunchy-60616.jpeg"
+        },
+        {
+          "name": "Evening Snacks",
+          "price": 549,
+          "image": "https://images.pexels.com/photos/3023476/pexels-photo-3023476.jpeg"
+        },
+        {
+          "name": "Large Burger Combo",
+          "price": 649,
+          "image": "https://images.pexels.com/photos/4021944/pexels-photo-4021944.jpeg"
+        },
+        {
+          "name": "French Fries",
+          "price": 199,
+          "image": "https://images.pexels.com/photos/7731985/pexels-photo-7731985.jpeg"
+        },
+        {
+          "name": "Fries with Chicken Leg pice",
+          "price": 359,
+          "image": "https://images.pexels.com/photos/30645224/pexels-photo-30645224.jpeg"
+        }
+      ],
+      "reviews": [
+        {
+          "user": "Shilpa Mukherjee",
+          "rating": 5,
+          "comment": "Nice Resturant"
+        }
+      ]
+    },
+    {
+      "name": "Burger king",
+      "contact": "+91 8745124784",
+      "address": "Laketown, Kolkata",
+      "openhour": "10AM-9PM",
+      "image": "https://cdn.pixabay.com/photo/2021/02/17/15/01/comida-6024545_1280.jpg",
+      "id": "480b",
+      "banner": "https://cdn.pixabay.com/photo/2022/01/23/16/34/drink-6961361_1280.jpg",
+      "popularDishes": [
+        {
+          "name": "Chicken Burger",
+          "price": 259,
+          "image": "https://images.pexels.com/photos/2702674/pexels-photo-2702674.jpeg"
+        },
+        {
+          "name": "Mixed Chowmin",
+          "price": 199,
+          "image": "https://images.pexels.com/photos/27640565/pexels-photo-27640565.jpeg"
+        },
+        {
+          "name": "Burger with Fries",
+          "price": 349,
+          "image": "https://images.pexels.com/photos/1556688/pexels-photo-1556688.jpeg"
+        },
+        {
+          "name": "Mixed Burger",
+          "price": 399,
+          "image": "https://images.pexels.com/photos/34504040/pexels-photo-34504040.jpeg"
+        }
+      ]
+    },
+    {
+      "name": "KFC",
+      "contact": "+91 7845165425",
+      "address": "Sector v, Kolkata",
+      "openhour": "9AM-10PM",
+      "image": "https://images.pexels.com/photos/29325599/pexels-photo-29325599.jpeg",
+      "id": "3fed",
+      "banner": "https://images.pexels.com/photos/29325599/pexels-photo-29325599.jpeg",
+      "popularDishes": [
+        {
+          "name": "Chicken Popcorn",
+          "price": 249,
+          "image": "https://images.pexels.com/photos/28525152/pexels-photo-28525152.jpeg"
+        },
+        {
+          "name": "Chicken Leg Pice Bucket",
+          "price": 499,
+          "image": "https://images.pexels.com/photos/13795311/pexels-photo-13795311.jpeg"
+        },
+        {
+          "name": "Fried Chili Chicken",
+          "price": 329,
+          "image": "https://images.pexels.com/photos/7734563/pexels-photo-7734563.jpeg"
+        },
+        {
+          "name": "KFC Cold Drinks",
+          "price": 149,
+          "image": "https://images.pexels.com/photos/7832998/pexels-photo-7832998.jpeg"
+        },
+        {
+          "name": "Rosted Chicken",
+          "price": 449,
+          "image": "https://images.pexels.com/photos/33569112/pexels-photo-33569112.jpeg"
+        },
+        {
+          "name": "Chicken Balls",
+          "price": 159,
+          "image": "https://images.pexels.com/photos/12349437/pexels-photo-12349437.jpeg"
+        }
+      ],
+      "reviews": [
+        {
+          "user": "Sam",
+          "rating": 5,
+          "comment": "Testy Foods"
+        }
+      ]
+    },
+    {
+      "name": "Star Bucks",
+      "contact": "+91 6535246576",
+      "address": "RDB, Sector v",
+      "openhour": "10AM-10PM",
+      "image": "https://images.unsplash.com/photo-1694152396864-156e23c6173b?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "id": "b4bf",
+      "banner": "https://images.unsplash.com/photo-1694152396864-156e23c6173b?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "popularDishes": [
+        {
+          "name": "Coffee Break with Latte and Bagel",
+          "price": 499,
+          "image": "https://images.pexels.com/photos/36238399/pexels-photo-36238399.jpeg"
+        },
+        {
+          "name": "Special Coffee and Tea",
+          "price": 399,
+          "image": "https://images.pexels.com/photos/7558122/pexels-photo-7558122.jpeg"
+        },
+        {
+          "name": "Cold Coffee from Starbucks",
+          "price": 249,
+          "image": "https://images.pexels.com/photos/16012040/pexels-photo-16012040.jpeg"
+        },
+        {
+          "name": "Special Coffee",
+          "price": 549,
+          "image": "https://images.pexels.com/photos/6030360/pexels-photo-6030360.jpeg"
+        }
+      ]
+    },
+    {
+      "name": "Domino's",
+      "contact": "+91 8745124574",
+      "address": "Kestopur, Kolkata",
+      "openhour": "10AM-9PM",
+      "image": "https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "id": "a9df",
+      "popularDishes": [
+        {
+          "name": "Delicious Pepperoni Pizza",
+          "price": 599,
+          "image": "https://images.pexels.com/photos/2619967/pexels-photo-2619967.jpeg"
+        },
+        {
+          "name": "Pan Fried Pizza",
+          "price": 649,
+          "image": "https://images.pexels.com/photos/29173087/pexels-photo-29173087.jpeg"
+        },
+        {
+          "name": "Vegies Overladed Pizza",
+          "price": 399,
+          "image": "https://images.pexels.com/photos/33917293/pexels-photo-33917293.jpeg"
+        }
+      ],
+      "reviews": [
+        {
+          "user": "Sam",
+          "rating": 4,
+          "comment": "Best testy Pizza"
+        }
+      ]
+    },
+    {
+      "name": "Pizza Hut",
+      "contact": "+91 6234526544",
+      "address": "Newtown, Kolkata",
+      "openhour": "9AM-9PM",
+      "image": "https://images.unsplash.com/photo-1615719413546-198b25453f85?q=80&w=736&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "id": "0da3",
+      "popularDishes": [
+        {
+          "name": "Fish Fry",
+          "price": 249,
+          "image": "https://images.pexels.com/photos/1352270/pexels-photo-1352270.jpeg"
+        },
+        {
+          "name": "Delicious Vegetarian Pizza",
+          "price": 499,
+          "image": "https://images.pexels.com/photos/31587829/pexels-photo-31587829.jpeg"
+        },
+        {
+          "name": "Onion Pizza",
+          "price": 349,
+          "image": "https://images.pexels.com/photos/31587851/pexels-photo-31587851.jpeg"
+        }
+      ],
+      "banner": "https://images.unsplash.com/photo-1697155406055-2db32d47ca07?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+    },
+    {
+      "name": "Arsalan",
+      "contact": "+91 8754782132",
+      "address": "Chinar Park, Kolkata",
+      "openhour": "10AM-9PM",
+      "image": "https://images.unsplash.com/photo-1697155406055-2db32d47ca07?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "id": "2e2a",
+      "popularDishes": [
+        {
+          "name": "Fruit Salad",
+          "price": 299,
+          "image": "https://images.pexels.com/photos/247685/pexels-photo-247685.png"
+        },
+        {
+          "name": "Mixed Fried Rice",
+          "price": 459,
+          "image": "https://images.pexels.com/photos/262897/pexels-photo-262897.jpeg"
+        },
+        {
+          "name": "Special Biriyani Bowl",
+          "price": 599,
+          "image": "https://images.pexels.com/photos/12737656/pexels-photo-12737656.jpeg"
+        },
+        {
+          "name": "Chicken Biriyani",
+          "price": 499,
+          "image": "https://images.pexels.com/photos/18601877/pexels-photo-18601877.jpeg"
+        }
+      ]
+    }
+  ],
+  "reviews": [
+    {
+      "user": "Shilpa",
+      "rating": 5,
+      "comment": "Amazing taste!",
+      "id": "188f"
+    }
+  ]
+}
