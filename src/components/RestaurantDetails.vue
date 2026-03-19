@@ -130,7 +130,7 @@
     </div>
 
     <!-- POPULAR DISHES -->
-    <div class="dishes-section page-container">
+    <div class="dishes-section page-container" data-aos="fade-up">
       <div class="section-header">
         <h2>
           <svg
@@ -214,7 +214,7 @@
           v-for="(dish, index) in restaurant.popularDishes"
           :key="index"
         >
-          <div class="dish-card">
+          <div class="dish-card" data-aos="fade-up">
             <!-- Rank Badge -->
             <span class="dish-rank" v-if="index < 3">
               <svg viewBox="0 0 24 24" fill="currentColor" width="10" height="10">
@@ -295,7 +295,7 @@
     </div>
 
     <!-- REVIEWS -->
-    <div class="review-section page-container">
+    <div class="review-section page-container" data-aos="fade-up">
       <div class="section-header">
         <h2>
           <svg

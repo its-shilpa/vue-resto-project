@@ -77,7 +77,7 @@
         </div>
 
         <!-- Table -->
-        <div class="table-wrapper" v-if="!loading && filteredRestaurants.length" data-aos="zoom-in" :data-aos-delay="index * 100">
+        <div class="table-wrapper" v-if="!loading && filteredRestaurants.length" data-aos="fade-up">
           <table>
             <thead>
               <tr>

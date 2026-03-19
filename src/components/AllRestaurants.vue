@@ -2,22 +2,61 @@
   <div class="all-resto-page">
     <!-- Hero Banner with Food BG -->
     <section class="resto-hero">
-      <div class="resto-hero-bg" style="background-image: url('https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg')"></div>
+      <div
+        class="resto-hero-bg"
+        style="
+          background-image: url('https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg');
+        "
+      ></div>
       <div class="resto-hero-overlay"></div>
       <div class="resto-hero-content">
         <span class="resto-hero-badge">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            width="14"
+            height="14"
+          >
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" />
+            <circle cx="12" cy="10" r="3" />
+          </svg>
           {{ filteredRestaurants.length }} Restaurants Near You
         </span>
-        <h1>Find Your Perfect<br/><span class="hero-accent">Dining Spot</span></h1>
+        <h1>
+          Find Your Perfect<br /><span class="hero-accent">Dining Spot</span>
+        </h1>
         <p>Explore our curated list of top-rated restaurants</p>
         <div class="resto-search-bar">
-          <svg class="resto-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20">
-            <circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" />
+          <svg
+            class="resto-search-icon"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            width="20"
+            height="20"
+          >
+            <circle cx="11" cy="11" r="8" />
+            <line x1="21" y1="21" x2="16.65" y2="16.65" />
           </svg>
-          <input v-model="search" placeholder="Search restaurants, locations..." />
+          <input
+            v-model="search"
+            placeholder="Search restaurants, locations..."
+          />
           <button class="search-btn" v-if="search" @click="search = ''">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              width="16"
+              height="16"
+            >
+              <line x1="18" y1="6" x2="6" y2="18" />
+              <line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
           </button>
         </div>
       </div>
@@ -29,7 +68,21 @@
       <div class="resto-toolbar">
         <div class="resto-toolbar-left">
           <div class="toolbar-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M18 8h1a4 4 0 010 8h-1M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              width="18"
+              height="18"
+            >
+              <path
+                d="M18 8h1a4 4 0 010 8h-1M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z"
+              />
+              <line x1="6" y1="1" x2="6" y2="4" />
+              <line x1="10" y1="1" x2="10" y2="4" />
+              <line x1="14" y1="1" x2="14" y2="4" />
+            </svg>
           </div>
           <div class="toolbar-text">
             <span class="toolbar-count">{{ filteredRestaurants.length }}</span>
@@ -37,7 +90,8 @@
           </div>
         </div>
         <div class="toolbar-page-badge">
-          Page <span>{{ currentPage }}</span> / <span>{{ totalPages || 1 }}</span>
+          Page <span>{{ currentPage }}</span> /
+          <span>{{ totalPages || 1 }}</span>
         </div>
       </div>
 
@@ -48,17 +102,37 @@
       </div>
 
       <p v-if="error" class="error-msg">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
-          <circle cx="12" cy="12" r="10" /><line x1="15" y1="9" x2="9" y2="15" /><line x1="9" y1="9" x2="15" y2="15" />
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          width="18"
+          height="18"
+        >
+          <circle cx="12" cy="12" r="10" />
+          <line x1="15" y1="9" x2="9" y2="15" />
+          <line x1="9" y1="9" x2="15" y2="15" />
         </svg>
         {{ error }}
       </p>
 
       <!-- Empty -->
-      <div v-if="!loading && filteredRestaurants.length === 0 && !error" class="empty-state">
+      <div
+        v-if="!loading && filteredRestaurants.length === 0 && !error"
+        class="empty-state"
+      >
         <div class="empty-icon-wrap">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="40" height="40">
-            <circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" />
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            width="40"
+            height="40"
+          >
+            <circle cx="11" cy="11" r="8" />
+            <line x1="21" y1="21" x2="16.65" y2="16.65" />
           </svg>
         </div>
         <h3>No restaurants found</h3>
@@ -66,29 +140,87 @@
       </div>
 
       <!-- Cards – Magazine Style -->
-      <div class="resto-grid" v-if="!loading && filteredRestaurants.length" data-aos="zoom-in" :data-aos-delay="index * 100">
+      <div
+        class="resto-grid"
+        v-if="!loading && filteredRestaurants.length"
+        data-aos="zoom-in"
+        :data-aos-delay="index * 100"
+      >
         <div
-          v-for="item in paginatedRestaurants"
+          v-for="(item, index) in paginatedRestaurants"
           :key="item.id"
-          class="resto-card"
-          @click="$router.push({ name: 'RestaurantDetails', params: { id: item.id } })"
+          class="restaurant-card"
+          data-aos="zoom-in"
+          :data-aos-delay="index * 100"
+          @click="
+            $router.push({ name: 'RestaurantDetails', params: { id: item.id } })
+          "
         >
-          <div class="resto-card-bg" :style="{ backgroundImage: item.image ? `url(${item.image})` : `url(https://via.placeholder.com/400x300?text=No+Image)` }"></div>
-          <div class="resto-card-overlay"></div>
-          <div class="resto-card-inner">
-            <span class="resto-card-tag">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
-              <span v-html="highlight(item.address)"></span>
-            </span>
-            <h3 v-html="highlight(item.name)"></h3>
-            <div class="resto-card-bottom">
-              <span class="resto-card-contact">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
-                {{ item.contact }}
+          <div
+            v-for="item in paginatedRestaurants"
+            :key="item.id"
+            class="resto-card"
+            @click="
+              $router.push({
+                name: 'RestaurantDetails',
+                params: { id: item.id },
+              })
+            "
+          >
+            <div
+              class="resto-card-bg"
+              :style="{
+                backgroundImage: item.image
+                  ? `url(${item.image})`
+                  : `url(https://via.placeholder.com/400x300?text=No+Image)`,
+              }"
+            ></div>
+            <div class="resto-card-overlay"></div>
+            <div class="resto-card-inner">
+              <span class="resto-card-tag">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  width="12"
+                  height="12"
+                >
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" />
+                  <circle cx="12" cy="10" r="3" />
+                </svg>
+                <span v-html="highlight(item.address)"></span>
               </span>
-              <span class="resto-card-arrow">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><polyline points="9 18 15 12 9 6"/></svg>
-              </span>
+              <h3 v-html="highlight(item.name)"></h3>
+              <div class="resto-card-bottom">
+                <span class="resto-card-contact">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    width="13"
+                    height="13"
+                  >
+                    <path
+                      d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"
+                    />
+                  </svg>
+                  {{ item.contact }}
+                </span>
+                <span class="resto-card-arrow">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    width="18"
+                    height="18"
+                  >
+                    <polyline points="9 18 15 12 9 6" />
+                  </svg>
+                </span>
+              </div>
             </div>
           </div>
         </div>
@@ -96,14 +228,45 @@
 
       <!-- Pagination -->
       <div v-if="!loading && totalPages > 1" class="pagination">
-        <button @click="currentPage--" :disabled="currentPage === 1" class="page-btn page-btn-nav">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><polyline points="15 18 9 12 15 6" /></svg>
+        <button
+          @click="currentPage--"
+          :disabled="currentPage === 1"
+          class="page-btn page-btn-nav"
+        >
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            width="16"
+            height="16"
+          >
+            <polyline points="15 18 9 12 15 6" />
+          </svg>
         </button>
-        <button v-for="page in totalPages" :key="page" @click="currentPage = page" :class="['page-btn', { active: currentPage === page }]">
+        <button
+          v-for="page in totalPages"
+          :key="page"
+          @click="currentPage = page"
+          :class="['page-btn', { active: currentPage === page }]"
+        >
           {{ page }}
         </button>
-        <button @click="currentPage++" :disabled="currentPage === totalPages" class="page-btn page-btn-nav">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><polyline points="9 18 15 12 9 6" /></svg>
+        <button
+          @click="currentPage++"
+          :disabled="currentPage === totalPages"
+          class="page-btn page-btn-nav"
+        >
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            width="16"
+            height="16"
+          >
+            <polyline points="9 18 15 12 9 6" />
+          </svg>
         </button>
       </div>
     </section>
@@ -158,7 +321,7 @@ export default {
       return this.restaurants.filter(
         (item) =>
           item.name.toLowerCase().includes(this.search.toLowerCase()) ||
-          item.address.toLowerCase().includes(this.search.toLowerCase())
+          item.address.toLowerCase().includes(this.search.toLowerCase()),
       );
     },
 
@@ -173,7 +336,9 @@ export default {
   },
 
   watch: {
-    search() { this.currentPage = 1; },
+    search() {
+      this.currentPage = 1;
+    },
   },
 };
 </script>
@@ -350,7 +515,11 @@ export default {
   width: 42px;
   height: 42px;
   border-radius: 12px;
-  background: linear-gradient(135deg, rgba(245, 158, 11, 0.15), rgba(217, 119, 6, 0.1));
+  background: linear-gradient(
+    135deg,
+    rgba(245, 158, 11, 0.15),
+    rgba(217, 119, 6, 0.1)
+  );
   border: 1px solid rgba(245, 158, 11, 0.2);
   display: flex;
   align-items: center;
@@ -410,7 +579,11 @@ export default {
   margin: 0 auto 16px;
 }
 
-@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
 
 /* Error */
 .error-msg {
@@ -437,7 +610,11 @@ export default {
   width: 80px;
   height: 80px;
   border-radius: 20px;
-  background: linear-gradient(135deg, rgba(245, 158, 11, 0.08), rgba(217, 119, 6, 0.12));
+  background: linear-gradient(
+    135deg,
+    rgba(245, 158, 11, 0.08),
+    rgba(217, 119, 6, 0.12)
+  );
   display: flex;
   align-items: center;
   justify-content: center;
@@ -663,7 +840,9 @@ export default {
   cursor: not-allowed;
 }
 
-.page-btn-nav { padding: 0; }
+.page-btn-nav {
+  padding: 0;
+}
 
 /* ===== Responsive ===== */
 @media (max-width: 1024px) {
@@ -720,7 +899,9 @@ export default {
   }
   .resto-hero-content h1 {
     font-size: 24px;
-    br { display: none; }
+    br {
+      display: none;
+    }
   }
   .resto-hero-content p {
     font-size: 13px;

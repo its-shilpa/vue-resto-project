@@ -59,7 +59,7 @@
       </div>
 
       <!-- Cards -->
-      <div class="restaurant-grid" v-if="!loading && filteredRestaurants.length" data-aos="zoom-in" :data-aos-delay="index * 100">
+      <div class="restaurant-grid" v-for="(item, index) in paginatedRestaurants" :key="item.id" data-aos="zoom-in" :data-aos-delay="index * 100">
         <div
           v-for="item in paginatedRestaurants"
           :key="item.id"

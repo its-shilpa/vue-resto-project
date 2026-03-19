@@ -37,7 +37,7 @@
 
     <!-- Form -->
     <section class="form-content page-container">
-      <div class="form-card">
+      <div class="form-card" data-aos="fade-up">
         <div class="input-group">
           <label>Restaurant Name</label>
           <div class="input-wrapper">

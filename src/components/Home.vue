@@ -234,7 +234,7 @@
       </div>
 
       <!-- Cards -->
-      <div data-aos="zoom-in" :data-aos-delay="index * 100">
+      <div v-for="(item, index) in paginatedRestaurants" :key="item.id" class="restaurant-card" data-aos="zoom-in" :data-aos-delay="index * 100">
         <h2 class="resto-card-head">Our Propular Resturants</h2>
       </div>
       <div
@@ -610,6 +610,7 @@
 <script>
 // import axios from "axios";
 import API from "@/services/api";
+import AOS from "aos";
 
 import { Swiper, SwiperSlide } from "swiper/vue";
 import "swiper/css";
@@ -656,6 +657,10 @@ export default {
     this.getPopularDishes();
 
     this.getAllReviews();
+
+    this.$nextTick(() => {
+      AOS.refresh();
+    });
 
     const user = JSON.parse(localStorage.getItem("user"));
     this.favoriteDishes = user?.favoriteDishes || [];
