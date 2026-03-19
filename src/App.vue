@@ -13,11 +13,19 @@ import { computed } from "vue";
 import { useRoute } from "vue-router";
 import Headrsec from "./components/Headrsec.vue";
 import AppFooter from "./components/FooterSec.vue";
+import AOS from "aos";
 export default {
   name: "App",
   components: {
     Headrsec,
     AppFooter
+  },
+  mounted() {
+    this.$router.afterEach(() => {
+      setTimeout(() => {
+        AOS.refresh();
+      }, 100);
+    });
   },
   setup() {
     const route = useRoute();
@@ -308,5 +316,24 @@ svg {
     width: 50% !important;
     height: 50% !important;
 }
+}
+
+
+/* Animation css */
+.card {
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+}
+
+button {
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  transform: scale(1.05);
 }
 </style>

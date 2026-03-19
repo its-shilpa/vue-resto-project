@@ -37,7 +37,7 @@
 
     <!-- Content -->
     <section class="profile-content page-container">
-      <div class="profile-card" v-if="!isEditing">
+      <div class="profile-card" v-if="!isEditing" data-aos="fade-up">
         <div class="card-header">
           <h2>
             <svg

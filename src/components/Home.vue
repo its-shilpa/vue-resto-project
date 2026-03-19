@@ -119,7 +119,7 @@
     </section>
 
     <!-- About Section -->
-    <section v-if="!search" class="about-section page-container">
+    <section v-if="!search" class="about-section page-container" data-aos="fade-up">
       <div class="about-grid">
         <!-- Left Content -->
         <div class="about-content">
@@ -234,7 +234,7 @@
       </div>
 
       <!-- Cards -->
-      <div>
+      <div data-aos="zoom-in" :data-aos-delay="index * 100">
         <h2 class="resto-card-head">Our Propular Resturants</h2>
       </div>
       <div
@@ -344,7 +344,7 @@
 
     <!-- Popular Dishes Section -->
     <section v-if="!search" class="home-dishes page-container">
-      <div class="section-header">
+      <div class="section-header" data-aos="fade-up">
         <h2>Popular Dishes</h2>
         <p>Most loved dishes from our restaurants</p>
       </div>
@@ -396,7 +396,7 @@
 
     <!-- Stats Section -->
     <section v-if="!search" class="stats-section page-container">
-      <div class="stats-container">
+      <div class="stats-container" data-aos="fade-right">
         <div class="stat-card">
           <div class="stat-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="28" height="28">
@@ -434,7 +434,7 @@
     <!-- Special Offers Section -->
     <section v-if="!search" class="offers-banner-section page-container">
 
-      <div class="section-header">
+      <div class="section-header" data-aos="fade-left">
         <h2>Special Offers</h2>
         <p>Don't miss these exclusive deals</p>
       </div>
@@ -521,7 +521,7 @@
     <!-- Customer Reviews -->
     <section v-if="!search" class="reviews-section page-container">
 
-      <div class="section-header">
+      <div class="section-header" data-aos="fade-up">
         <h2>What Our Customers Say</h2>
         <p>Real reviews from our restaurant visitors</p>
       </div>
@@ -573,7 +573,7 @@
     </section>
 
     <!-- CTA Section -->
-    <section class="cta-section page-container">
+    <section class="cta-section page-container" data-aos="fade-right">
       <div class="cta-card">
         <div class="cta-decoration">
           <div class="cta-circle cta-circle-1"></div>

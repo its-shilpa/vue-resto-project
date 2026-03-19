@@ -25,7 +25,7 @@
       </div>
 
       <!-- Users Grid -->
-      <div class="users-grid" v-if="!loading && users.length">
+      <div class="users-grid" v-if="!loading && users.length" data-aos="fade-up">
         <div v-for="user in users" :key="user.id" class="user-card" :class="{ 'is-online': user.isLoggedIn }">
           <div class="user-avatar" :class="user.role">
             {{ user.name ? user.name[0].toUpperCase() : '?' }}

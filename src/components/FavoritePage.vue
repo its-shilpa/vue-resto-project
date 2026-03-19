@@ -38,7 +38,7 @@ Dishes
 
 <div v-if="activeTab==='restaurants'">
 
-<div v-if="favoriteRestaurants.length" class="favorite-grid">
+<div v-if="favoriteRestaurants.length" class="favorite-grid" data-aos="fade-left">
 
 <div
 v-for="restaurant in favoriteRestaurants"
