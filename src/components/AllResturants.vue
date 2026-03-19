@@ -59,11 +59,13 @@
       </div>
 
       <!-- Cards -->
-      <div class="restaurant-grid" v-for="(item, index) in paginatedRestaurants" :key="item.id" data-aos="fade-up" :data-aos-delay="index * 80">
+      <div class="restaurant-grid" v-if="!loading && filteredRestaurants.length">
         <div
-          v-for="item in paginatedRestaurants"
+          v-for="(item, index) in paginatedRestaurants"
           :key="item.id"
           class="restaurant-card"
+          data-aos="fade-up"
+          :data-aos-delay="index * 80"
           @click="$router.push({ name: 'RestaurantDetails', params: { id: item.id } })"
         >
           <div
@@ -94,6 +96,7 @@
           </div>
         </div>
       </div>
+
 
       <!-- Pagination -->
       <div v-if="!loading && totalPages > 1" class="pagination">

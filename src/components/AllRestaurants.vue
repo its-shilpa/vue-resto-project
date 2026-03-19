@@ -147,24 +147,13 @@
         <div
           v-for="(item, index) in paginatedRestaurants"
           :key="item.id"
-          class="restaurant-card"
+          class="resto-card"
           data-aos="zoom-in"
           :data-aos-delay="index * 100"
           @click="
             $router.push({ name: 'RestaurantDetails', params: { id: item.id } })
           "
         >
-          <div
-            v-for="item in paginatedRestaurants"
-            :key="item.id"
-            class="resto-card"
-            @click="
-              $router.push({
-                name: 'RestaurantDetails',
-                params: { id: item.id },
-              })
-            "
-          >
             <div
               class="resto-card-bg"
               :style="{
@@ -220,8 +209,8 @@
                 </span>
               </div>
             </div>
-          </div>
         </div>
+
       </div>
 
       <!-- Pagination -->

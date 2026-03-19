@@ -255,17 +255,6 @@
             $router.push({ name: 'RestaurantDetails', params: { id: item.id } })
           "
         >
-          <div
-            v-for="item in paginatedRestaurants"
-            :key="item.id"
-            class="restaurant-card"
-            @click="
-              $router.push({
-                name: 'RestaurantDetails',
-                params: { id: item.id },
-              })
-            "
-          >
             <div
               class="card-image"
               :style="{
@@ -309,8 +298,8 @@
                 <span>{{ item.contact }}</span>
               </div>
             </div>
-          </div>
         </div>
+
       </div>
 
       <!-- Pagination -->
