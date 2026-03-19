@@ -2,7 +2,7 @@
   <footer class="app-footer">
     <div class="footer-container">
       <!-- Brand -->
-      <div class="footer-brand">
+      <div class="footer-brand" data-aos="fade-up">
         <div class="footer-logo">
           <span class="footer-logo-icon">🍽️</span>
           <h3>RestroHub</h3>
@@ -11,7 +11,7 @@
       </div>
 
       <!-- Links -->
-      <div class="footer-links">
+      <div class="footer-links" data-aos="fade-up" data-aos-delay="100">
         <h4>Quick Links</h4>
         <ul>
           <li><router-link to="/">Home</router-link></li>
@@ -24,7 +24,7 @@
       </div>
 
       <!-- Contact -->
-      <div class="footer-contact">
+      <div class="footer-contact" data-aos="fade-up" data-aos-delay="200">
         <h4>Contact</h4>
         <p>📧 shilpamukherjee625@gmail.com</p>
         <p>📞 +91 62940 94588</p>
@@ -32,7 +32,7 @@
       </div>
 
       <!-- Social -->
-      <div class="footer-social">
+      <div class="footer-social" data-aos="fade-up" data-aos-delay="300">
         <h4>Follow Us</h4>
         <div class="social-icons">
           <a href="https://github.com/its-shilpa" target="_blank" aria-label="GitHub" class="social-link social-github">

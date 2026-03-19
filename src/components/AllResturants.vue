@@ -3,7 +3,7 @@
     <!-- Banner -->
     <section class="page-banner">
       <div class="banner-bg"></div>
-      <div class="banner-content">
+      <div class="banner-content" data-aos="fade-down" data-aos-duration="1000">
         <h1 class="banner-title">All <span class="banner-highlight">Restaurants</span></h1>
         <p class="banner-subtitle">Browse our complete collection of restaurants</p>
         <div class="banner-search">
@@ -59,7 +59,7 @@
       </div>
 
       <!-- Cards -->
-      <div class="restaurant-grid" v-for="(item, index) in paginatedRestaurants" :key="item.id" data-aos="zoom-in" :data-aos-delay="index * 100">
+      <div class="restaurant-grid" v-for="(item, index) in paginatedRestaurants" :key="item.id" data-aos="fade-up" :data-aos-delay="index * 80">
         <div
           v-for="item in paginatedRestaurants"
           :key="item.id"

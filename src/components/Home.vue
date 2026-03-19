@@ -3,7 +3,7 @@
     <!-- Hero Section -->
     <section class="hero">
       <div class="hero-bg"></div>
-      <div class="hero-content">
+      <div class="hero-content" data-aos="fade-down" data-aos-duration="1000">
         <!-- <div class="hero-badge">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
           Trusted Platform
@@ -58,7 +58,7 @@
     >
       <!-- Restaurant Results -->
       <div v-if="filteredRestaurants.length">
-        <h2 class="search-title">Restaurants</h2>
+        <h2 class="search-title" data-aos="fade-right">Restaurants</h2>
 
         <div class="restaurant-grid">
           <div
@@ -93,7 +93,7 @@
 
       <!-- Dish Results -->
       <div v-if="filteredDishes.length">
-        <h2 class="search-title">Dishes</h2>
+        <h2 class="search-title" data-aos="fade-right">Dishes</h2>
 
         <div class="restaurant-grid">
           <div
@@ -126,7 +126,7 @@
     >
       <div class="about-grid">
         <!-- Left Content -->
-        <div class="about-content">
+        <div class="about-content" data-aos="fade-right" data-aos-delay="100">
           <h2 class="about-title">About Our Platform</h2>
           <p class="about-desc">
             Our restaurant management platform helps users discover, explore,
@@ -178,7 +178,7 @@
         </div>
 
         <!-- Right Image -->
-        <div class="about-image">
+        <div class="about-image" data-aos="fade-left" data-aos-delay="200">
           <img
             src="https://images.pexels.com/photos/4760721/pexels-photo-4760721.jpeg"
             alt="Restaurant"
@@ -238,7 +238,7 @@
       </div>
 
       <!-- Cards -->
-      <div>
+      <div data-aos="fade-up">
         <h2 class="resto-card-head">Our Propular Resturants</h2>
       </div>
       <div

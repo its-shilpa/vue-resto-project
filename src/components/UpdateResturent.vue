@@ -3,7 +3,7 @@
     <!-- Hero -->
     <section class="form-hero">
       <div class="form-hero-bg"></div>
-      <div class="form-hero-content">
+      <div class="form-hero-content" data-aos="fade-down" data-aos-duration="800">
         <router-link to="/admin-dashboard" class="back-link">
           <svg
             viewBox="0 0 24 24"

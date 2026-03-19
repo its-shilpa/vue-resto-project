@@ -9,7 +9,7 @@
         "
       ></div>
       <div class="resto-hero-overlay"></div>
-      <div class="resto-hero-content">
+      <div class="resto-hero-content" data-aos="fade-down" data-aos-duration="1000">
         <span class="resto-hero-badge">
           <svg
             viewBox="0 0 24 24"
@@ -65,7 +65,7 @@
     <!-- Content -->
     <section class="resto-content page-container">
       <!-- Toolbar -->
-      <div class="resto-toolbar">
+      <div class="resto-toolbar" data-aos="fade-up">
         <div class="resto-toolbar-left">
           <div class="toolbar-icon">
             <svg
@@ -143,8 +143,6 @@
       <div
         class="resto-grid"
         v-if="!loading && filteredRestaurants.length"
-        data-aos="zoom-in"
-        :data-aos-delay="index * 100"
       >
         <div
           v-for="(item, index) in paginatedRestaurants"

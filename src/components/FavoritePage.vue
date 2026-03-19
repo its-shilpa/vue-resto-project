@@ -5,7 +5,7 @@
 <!-- Banner -->
 <section class="page-banner">
   <div class="banner-bg"></div>
-  <div class="banner-content">
+  <div class="banner-content" data-aos="fade-down" data-aos-duration="1000">
     <h1 class="banner-title">Your <span class="banner-highlight">Favorites</span></h1>
     <p class="banner-subtitle">All your loved restaurants and dishes in one place</p>
   </div>
@@ -13,7 +13,7 @@
 
 <div class="favorites-wrapper page-container">
 <!-- Tabs -->
-<div class="fav-tabs">
+<div class="fav-tabs" data-aos="fade-up" data-aos-delay="100">
 
 <button
 :class="['tab-btn',{active:activeTab==='restaurants'}]"
@@ -38,7 +38,7 @@ Dishes
 
 <div v-if="activeTab==='restaurants'">
 
-<div v-if="favoriteRestaurants.length" class="favorite-grid" data-aos="fade-left">
+<div v-if="favoriteRestaurants.length" class="favorite-grid" data-aos="fade-up">
 
 <div
 v-for="restaurant in favoriteRestaurants"
@@ -83,7 +83,7 @@ class="favorite-item"
 
 <div v-if="activeTab==='dishes'">
 
-<div v-if="favoriteDishes.length" class="favorites-grid">
+<div v-if="favoriteDishes.length" class="favorites-grid" data-aos="fade-up">
 
 <div
 v-for="(dish,index) in favoriteDishes"

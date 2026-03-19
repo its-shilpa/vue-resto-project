@@ -3,7 +3,7 @@
     <!-- Hero -->
     <section class="profile-hero">
       <div class="profile-hero-bg"></div>
-      <div class="profile-hero-content">
+      <div class="profile-hero-content" data-aos="fade-up" data-aos-duration="1000">
         <div class="avatar-ring">
           <div class="avatar">
             <span>{{ initials }}</span>
@@ -151,7 +151,7 @@
       </div>
 
       <!-- Edit Form -->
-      <div class="profile-card" v-if="isEditing">
+      <div class="profile-card" v-if="isEditing" data-aos="fade-up">
         <div class="card-header">
           <h2>
             <svg

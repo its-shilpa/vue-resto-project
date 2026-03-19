@@ -3,7 +3,7 @@
     <!-- Header -->
     <section class="dash-hero">
       <div class="dash-hero-bg"></div>
-      <div class="dash-hero-content">
+      <div class="dash-hero-content" data-aos="fade-down" data-aos-duration="1000">
         <div class="dash-hero-left">
           <h1 class="dash-title">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="28" height="28"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
@@ -21,7 +21,7 @@
     <!-- Content -->
     <section class="dash-content page-container">
       <!-- Stats -->
-      <div class="stats-row" v-if="!loading">
+      <div class="stats-row" v-if="!loading" data-aos="fade-up" data-aos-delay="100">
         <div class="stat-card">
           <div class="stat-icon" style="background: linear-gradient(135deg, #3b82f6, #60a5fa);">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><path d="M18 8h1a4 4 0 010 8h-1M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z"/></svg>
@@ -52,7 +52,7 @@
       </div>
 
       <!-- Search & Table Card -->
-      <div class="table-card">
+      <div class="table-card" data-aos="fade-up" data-aos-delay="200">
         <div class="table-header">
           <h2 class="table-title">All Restaurants</h2>
           <div class="search-wrapper">

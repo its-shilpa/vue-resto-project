@@ -3,7 +3,7 @@
     <!-- Left: Hero Panel -->
     <div class="auth-hero">
       <div class="hero-overlay"></div>
-      <div class="hero-content">
+      <div class="hero-content" data-aos="fade-right" data-aos-duration="1000">
         <div class="hero-badge">🍽️ RestroHub</div>
         <h2 class="hero-title">Start Your<br />Journey <span class="hero-accent">Today</span></h2>
         <p class="hero-text">Join thousands of restaurant owners who trust RestroHub to manage their business efficiently and grow revenue.</p>
@@ -30,7 +30,7 @@
 
     <!-- Right: Form Panel -->
     <div class="auth-form-panel">
-      <div class="form-container">
+      <div class="form-container" data-aos="fade-left" data-aos-duration="800" data-aos-delay="200">
         <div class="form-top">
           <h1 class="form-title">Create Account</h1>
           <p class="form-subtitle">Fill in your details to get started</p>

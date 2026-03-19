@@ -30,7 +30,7 @@
     </div>
 
     <!-- ACTION BAR -->
-    <div class="action-bar page-container">
+    <div class="action-bar page-container" data-aos="fade-up">
       <button class="back-btn" @click="$router.back()">
         <svg
           viewBox="0 0 24 24"
@@ -66,7 +66,7 @@
     </div>
 
     <!-- INFO SECTION -->
-    <div class="info-section page-container">
+    <div class="info-section page-container" data-aos="fade-up" data-aos-delay="100">
       <div class="info-card">
         <div class="info-icon">
           <svg
