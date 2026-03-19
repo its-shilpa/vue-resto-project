@@ -1077,7 +1077,7 @@ export default {
     ),
     linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
   border-radius: 28px;
-  padding: 48px 36px 60px;
+  padding: 48px 28px 60px;
   margin-top: -40px;
 }
 
@@ -1390,7 +1390,11 @@ export default {
 /* ===== Responsive ===== */
 @media (max-width: 768px) {
   .hero {
-    padding: 36px 20px 60px;
+    padding: 36px 24px 60px;
+  }
+
+  .hero-content {
+    max-width: 100%;
   }
 
   .hero-title {
@@ -1399,6 +1403,10 @@ export default {
 
   .hero-subtitle {
     font-size: 14px;
+  }
+
+  .hero-search {
+    max-width: 100%;
   }
 
   .hero-search input {
@@ -1416,7 +1424,7 @@ export default {
   }
 
   .content-section {
-    padding: 32px 16px 44px;
+    padding: 32px 20px 44px;
     border-radius: 24px;
     margin-top: -36px;
   }
@@ -1467,6 +1475,10 @@ export default {
     padding: 28px 16px 52px;
   }
 
+  .hero-content {
+    max-width: 100%;
+  }
+
   .hero-title {
     font-size: 22px;
   }
@@ -1477,6 +1489,7 @@ export default {
   }
 
   .hero-search {
+    max-width: 100%;
     margin-bottom: 20px;
   }
 
@@ -1506,7 +1519,7 @@ export default {
   }
 
   .content-section {
-    padding: 24px 12px 36px;
+    padding: 24px 16px 36px;
     border-radius: 20px;
     margin-top: -32px;
   }
@@ -1563,7 +1576,7 @@ export default {
 /* ===== About Section ===== */
 
 .about-section {
-  padding: 70px 36px;
+  padding: 70px 28px;
   margin-top: -20px;
 }
 
@@ -1625,17 +1638,39 @@ export default {
 }
 
 @media (max-width: 768px) {
+  .about-section {
+    padding: 40px 20px;
+  }
   .about-grid {
     grid-template-columns: 1fr;
     gap: 30px;
   }
-
   .about-title {
     font-size: 24px;
   }
-
   .about-desc {
     font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .about-section {
+    padding: 30px 16px;
+  }
+  .about-title {
+    font-size: 20px;
+    margin-bottom: 12px;
+  }
+  .about-desc {
+    font-size: 13px;
+    margin-bottom: 20px;
+  }
+  .about-feature {
+    font-size: 13px;
+    gap: 8px;
+  }
+  .about-image img {
+    border-radius: 14px;
   }
 }
 
@@ -1649,8 +1684,6 @@ export default {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 28px;
-  max-width: 960px;
-  margin: auto;
 }
 
 .stat-card {
@@ -1785,7 +1818,7 @@ export default {
 
 /* ===== Popular Dishes Section ===== */
 .popular-dishes {
-  padding: 70px 36px;
+  padding: 70px 0;
 }
 
 .section-header {
@@ -1794,7 +1827,7 @@ export default {
 }
 
 .section-header h2 {
-  font-size: 30px;
+  font-size: 28px;
   font-weight: 800;
   color: var(--text-primary);
 }
@@ -1802,6 +1835,34 @@ export default {
 .section-header p {
   color: var(--text-secondary);
   font-size: 14px;
+  margin-top: 6px;
+}
+
+@media (max-width: 768px) {
+  .section-header h2 {
+    font-size: 24px;
+  }
+  .section-header p {
+    font-size: 13px;
+  }
+  .section-header {
+    margin-bottom: 28px;
+  }
+}
+
+@media (max-width: 480px) {
+  .section-header h2 {
+    font-size: 20px;
+  }
+  .section-header p {
+    font-size: 12px;
+  }
+  .section-header {
+    margin-bottom: 20px;
+  }
+  .resto-card-head {
+    font-size: 22px;
+  }
 }
 
 .home-dishes {
@@ -2078,18 +2139,34 @@ export default {
 }
 
 .search-section {
-  margin-top: 40px;
-  margin-bottom: 40px;
+  margin-top: 32px;
+  margin-bottom: 32px;
 }
 
 .search-title {
-  font-size: 26px;
+  font-size: 24px;
   font-weight: 800;
   margin-bottom: 20px;
   text-align: center;
 }
 
-/* ===== Special Offers ===== */
+@media (max-width: 768px) {
+  .search-title {
+    font-size: 20px;
+    margin-bottom: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .search-section {
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+  .search-title {
+    font-size: 18px;
+    margin-bottom: 12px;
+  }
+}
 
 .offers-banner-section {
   padding: 40px 0;

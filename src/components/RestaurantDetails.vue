@@ -5,6 +5,23 @@
       class="banner"
       :style="{ backgroundImage: `url(${restaurant.banner || restaurant.image || 'https://images.pexels.com/photos/11975899/pexels-photo-11975899.jpeg'})` }"
     >
+      <!-- Floating Action Buttons -->
+      <button class="banner-back-btn" @click="$router.back()" aria-label="Go back">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="20" height="20">
+          <polyline points="15 18 9 12 15 6" />
+        </svg>
+      </button>
+      <button
+        class="banner-fav-btn"
+        :class="{ active: isFavorite }"
+        @click="toggleFavorite"
+        :aria-label="isFavorite ? 'Remove from favorites' : 'Add to favorites'"
+      >
+        <svg viewBox="0 0 24 24" :fill="isFavorite ? 'currentColor' : 'none'" stroke="currentColor" stroke-width="2" width="20" height="20">
+          <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z" />
+        </svg>
+      </button>
+
       <div class="banner-overlay">
         <div class="banner-content">
           <h1>{{ restaurant.name }}</h1>
@@ -14,55 +31,20 @@
         </div>
       </div>
     </div>
+
     <!-- Admin Banner Edit -->
     <div v-if="isAdmin" class="banner-edit page-container">
       <h3>Update Banner Image</h3>
-
-      <input
-        v-model="editableBanner"
-        type="text"
-        placeholder="Paste Banner Image URL (https://...)"
-      />
-
-      <button @click="updateBanner" :disabled="!editableBanner">
-        Update Banner
-      </button>
-    </div>
-
-    <!-- ACTION BAR -->
-    <div class="action-bar page-container" data-aos="fade-up">
-      <button class="back-btn" @click="$router.back()">
-        <svg
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          width="16"
-          height="16"
-        >
-          <polyline points="15 18 9 12 15 6" />
-        </svg>
-        Back
-      </button>
-      <button
-        class="favorite-btn"
-        :class="{ active: isFavorite }"
-        @click="toggleFavorite"
-      >
-        <svg
-          viewBox="0 0 24 24"
-          :fill="isFavorite ? 'currentColor' : 'none'"
-          stroke="currentColor"
-          stroke-width="2"
-          width="18"
-          height="18"
-        >
-          <path
-            d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"
-          />
-        </svg>
-        {{ isFavorite ? "Remove Favorite" : "Add to Favorites" }}
-      </button>
+      <div class="banner-edit-row">
+        <input
+          v-model="editableBanner"
+          type="text"
+          placeholder="Paste Banner Image URL (https://...)"
+        />
+        <button @click="updateBanner" :disabled="!editableBanner">
+          Update Banner
+        </button>
+      </div>
     </div>
 
     <!-- INFO SECTION -->
@@ -215,13 +197,6 @@
           :key="index"
         >
           <div class="dish-card" data-aos="fade-up">
-            <!-- Rank Badge -->
-            <span class="dish-rank" v-if="index < 3">
-              <svg viewBox="0 0 24 24" fill="currentColor" width="10" height="10">
-                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
-              </svg>
-              #{{ index + 1 }}
-            </span>
             <!-- Image -->
             <div class="dish-image-wrap">
               <img :src="dish.image" :alt="dish.name" />
@@ -251,40 +226,17 @@
             </div>
             <!-- Admin Actions -->
             <div class="dish-admin-actions" v-if="isAdmin">
-              <button
-                class="edit-dish-btn"
-                @click.stop="editDish(dish, index)"
-              >
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  width="12"
-                  height="12"
-                >
-                  <path
-                    d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"
-                  />
-                  <path
-                    d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"
-                  />
+              <button class="edit-dish-btn" @click.stop="editDish(dish, index)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12">
+                  <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/>
+                  <path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/>
                 </svg>
                 Edit
               </button>
-              <button class="delete-dish-btn" @click.stop="deleteDish(index)">
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  width="12"
-                  height="12"
-                >
-                  <polyline points="3 6 5 6 21 6" />
-                  <path
-                    d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"
-                  />
+              <button class="delete-dish-btn" @click.stop="confirmDeleteDish(index)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12">
+                  <polyline points="3 6 5 6 21 6"/>
+                  <path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/>
                 </svg>
                 Delete
               </button>
@@ -752,79 +704,52 @@ export default {
   font-weight: 500;
 }
 
-/* ===== Action Bar ===== */
-.action-bar {
+/* ===== Floating Banner Buttons ===== */
+.banner-back-btn,
+.banner-fav-btn {
+  position: absolute;
+  top: 20px;
+  z-index: 10;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: none;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 20px 0;
-}
-
-.back-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 22px;
-  background: rgba(255, 255, 255, 0.8);
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  background: rgba(255, 255, 255, 0.2);
   backdrop-filter: blur(12px);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  font-family: "Inter", sans-serif;
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--text-secondary);
-  cursor: pointer;
-  transition: all 0.25s ease;
-}
-
-.back-btn:hover {
-  background: white;
-  border-color: var(--primary-light);
-  color: var(--primary-light);
-  transform: translateX(-4px);
-  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.15);
-}
-
-.favorite-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 12px 24px;
-  background: linear-gradient(
-    135deg,
-    rgba(239, 68, 68, 0.08),
-    rgba(244, 63, 94, 0.08)
-  );
-  border: 1.5px solid rgba(239, 68, 68, 0.2);
-  border-radius: 50px;
-  font-family: "Inter", sans-serif;
-  font-size: 14px;
-  font-weight: 600;
-  color: #ef4444;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.favorite-btn:hover {
-  background: linear-gradient(
-    135deg,
-    rgba(239, 68, 68, 0.15),
-    rgba(244, 63, 94, 0.15)
-  );
-  border-color: rgba(239, 68, 68, 0.4);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(239, 68, 68, 0.2);
-}
-
-.favorite-btn.active {
-  background: linear-gradient(135deg, #ef4444, #ec4899);
-  border-color: transparent;
+  -webkit-backdrop-filter: blur(12px);
   color: white;
-  box-shadow: 0 6px 20px rgba(239, 68, 68, 0.35);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
 }
 
-.favorite-btn.active:hover {
-  box-shadow: 0 10px 28px rgba(239, 68, 68, 0.45);
+.banner-back-btn {
+  left: 20px;
+}
+
+.banner-fav-btn {
+  right: 20px;
+}
+
+.banner-back-btn:hover,
+.banner-fav-btn:hover {
+  background: rgba(255, 255, 255, 0.35);
+  transform: scale(1.1);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.3);
+}
+
+.banner-fav-btn.active {
+  background: rgba(239, 68, 68, 0.85);
+  color: white;
+  box-shadow: 0 4px 20px rgba(239, 68, 68, 0.4);
+}
+
+.banner-fav-btn.active:hover {
+  background: rgba(239, 68, 68, 1);
+  box-shadow: 0 8px 28px rgba(239, 68, 68, 0.5);
 }
 
 /* ===== Info Section ===== */
@@ -1218,11 +1143,15 @@ export default {
 /* Admin Actions on Dish Card */
 .dish-admin-actions {
   position: absolute;
-  top: 14px;
-  right: 14px;
-  z-index: 5;
+  top: 12px;
+  right: 12px;
+  bottom: auto;
+  left: auto;
+  transform: none;
   display: flex;
+  align-items: center;
   gap: 6px;
+  z-index: 10;
 }
 
 /* ===== Review Section ===== */
@@ -1547,70 +1476,25 @@ export default {
     font-size: 28px;
   }
 
-  .action-bar {
-    padding: 16px 24px;
-    flex-direction: column;
-    gap: 12px;
-    align-items: stretch;
+  .banner-back-btn,
+  .banner-fav-btn {
+    width: 40px;
+    height: 40px;
+    top: 16px;
   }
 
-  .back-btn,
-  .favorite-btn {
-    justify-content: center;
+  .banner-back-btn {
+    left: 16px;
+  }
+
+  .banner-fav-btn {
+    right: 16px;
   }
 
   .info-section {
-    padding: 0 24px 32px;
     grid-template-columns: 1fr;
-  }
-
-  .dishes-section,
-  .review-section {
-    padding-left: 24px;
-    padding-right: 24px;
-  }
-
-  .dishes-grid {
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-  }
-
-  .review-form {
-    flex-direction: column;
-  }
-
-  .form-select-wrap select {
-    width: 100%;
-  }
-
-  .submit-btn {
-    justify-content: center;
-  }
-}
-
-@media (max-width: 480px) {
-  .banner {
-    height: 240px;
-  }
-
-  .banner-content {
-    padding: 24px 16px;
-  }
-
-  .banner-content h1 {
-    font-size: 22px;
-  }
-
-  .banner-meta {
-    font-size: 14px;
-  }
-
-  .action-bar {
-    padding: 12px 16px;
-  }
-
-  .info-section {
-    padding: 0 16px 24px;
     gap: 14px;
+    padding-bottom: 28px;
   }
 
   .info-card {
@@ -1624,32 +1508,141 @@ export default {
     border-radius: 12px;
   }
 
-  .dishes-section,
-  .review-section {
-    padding-left: 16px;
-    padding-right: 16px;
-  }
-
-  .dishes-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .dish-card {
-    height: 280px;
-  }
-
-  .dish-info-glass h4 {
+  .info-value {
     font-size: 14px;
   }
 
-  .dish-price-tag {
-    font-size: 12px;
-    padding: 4px 10px;
+  .dishes-section,
+  .review-section {
+    padding-top: 0;
+    padding-bottom: 28px;
+  }
+
+  .section-header h2 {
+    font-size: 18px;
+  }
+
+  .review-form {
+    flex-direction: column;
   }
 
   .review-form-card {
     padding: 20px;
-    border-radius: 16px;
+  }
+
+  .form-input-wrap input,
+  .form-select-wrap select {
+    min-width: 0;
+    width: 100%;
+  }
+
+  .submit-btn {
+    justify-content: center;
+  }
+
+  .banner-edit {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 20px;
+  }
+
+  .add-dish-card {
+    padding: 20px;
+  }
+
+  .add-dish-form {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .add-dish-form input {
+    min-width: 0;
+    width: 100%;
+    flex: none;
+  }
+
+  .add-dish-form .primary-btn,
+  .add-dish-form .cancel-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .dish-admin-actions {
+    gap: 6px;
+  }
+}
+
+@media (max-width: 480px) {
+  .banner {
+    height: 240px;
+  }
+
+  .banner-content {
+    padding: 20px 16px;
+  }
+
+  .banner-content h1 {
+    font-size: 22px;
+  }
+
+  .banner-meta {
+    font-size: 13px;
+  }
+
+  .banner-back-btn,
+  .banner-fav-btn {
+    width: 36px;
+    height: 36px;
+    top: 12px;
+  }
+
+  .banner-back-btn {
+    left: 12px;
+  }
+
+  .banner-back-btn svg,
+  .banner-fav-btn svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .banner-fav-btn {
+    right: 12px;
+  }
+
+  .info-section {
+    gap: 12px;
+    padding-bottom: 20px;
+  }
+
+  .info-card {
+    padding: 14px;
+    border-radius: 12px;
+    gap: 12px;
+  }
+
+  .info-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+  }
+
+  .info-icon svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .info-label {
+    font-size: 10px;
+  }
+
+  .info-value {
+    font-size: 13px;
+  }
+
+  .dishes-section,
+  .review-section {
+    padding-bottom: 20px;
   }
 
   .section-header {
@@ -1658,9 +1651,42 @@ export default {
     gap: 10px;
   }
 
+  .section-header h2 {
+    font-size: 16px;
+    gap: 8px;
+  }
+
   .review-card {
-    padding: 18px;
+    padding: 16px;
     border-radius: 14px;
+  }
+
+  .review-comment {
+    font-size: 13px;
+  }
+
+  .submit-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .banner-edit {
+    padding: 16px;
+    border-radius: 14px;
+  }
+
+  .add-dish-card {
+    padding: 16px;
+    border-radius: 14px;
+  }
+
+  .modal-box {
+    padding: 24px;
+    border-radius: 16px;
+  }
+
+  .modal-actions {
+    flex-direction: column;
   }
 }
 
@@ -1671,32 +1697,35 @@ export default {
   border-radius: 18px;
   box-shadow: 0 4px 16px rgba(15, 23, 42, 0.06),
     inset 0 1px 0 rgba(255, 255, 255, 0.8);
-  padding: 24px 28px;
+  padding: 20px 24px;
   margin-top: 20px;
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  flex-wrap: wrap;
 }
 
 .banner-edit h3 {
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 700;
   color: var(--text-primary);
-  white-space: nowrap;
+  margin-bottom: 12px;
+}
+
+.banner-edit-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .banner-edit input {
   flex: 1;
-  min-width: 200px;
-  height: 44px;
-  padding: 0 16px;
+  min-width: 0;
+  height: 42px;
+  padding: 0 14px;
   border: 2px solid var(--border);
-  border-radius: 12px;
+  border-radius: 10px;
   font-family: "Inter", sans-serif;
-  font-size: 14px;
+  font-size: 13px;
   color: var(--text-primary);
   background: rgba(248, 250, 252, 0.6);
+  color: #1e293b;
   outline: none;
   transition: all 0.25s ease;
 }
@@ -1707,19 +1736,65 @@ export default {
   box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
 }
 
+/* ===== Banner edit placeholder fix ===== */
+.banner-edit input::placeholder {
+  color: #94a3b8;
+  font-size: 13px;
+  font-style: italic;
+}
+
 .banner-edit button {
-  height: 44px;
-  padding: 0 24px;
+  height: 42px;
+  padding: 0 20px;
   background: linear-gradient(135deg, #1e40af, #3b82f6);
   color: white;
   border: none;
-  border-radius: 12px;
+  border-radius: 10px;
   font-family: "Inter", sans-serif;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
   white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.banner-edit button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(30, 64, 175, 0.35);
+}
+
+@media (max-width: 600px) {
+  .banner-edit {
+    padding: 16px;
+    border-radius: 14px;
+    margin-top: 16px;
+  }
+  .banner-edit h3 {
+    font-size: 13px;
+    margin-bottom: 10px;
+  }
+  .banner-edit-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+  .banner-edit input {
+    height: 40px;
+    font-size: 12px;
+    flex: unset !important;
+  }
+  .banner-edit button {
+    height: 40px;
+    font-size: 12px;
+    width: 100%;
+  }
+}
+
+.banner-edit input:focus {
+  border-color: var(--primary-light);
+  background: white;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
 }
 
 .banner-edit button:hover {
@@ -1817,55 +1892,50 @@ export default {
   background: var(--bg-card-alt);
 }
 
-/* ===== Admin: Dish Edit / Delete Buttons ===== */
-.dish-admin-actions {
-  display: flex;
-  gap: 8px;
-  margin-top: 10px;
-}
-
 .edit-dish-btn,
 .delete-dish-btn {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
-  padding: 5px 12px;
-  border-radius: 20px;
+  gap: 5px;
+  padding: 6px 13px;
+  border-radius: 8px;
   font-family: "Inter", sans-serif;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.25s ease;
-  border: 1.5px solid;
+  transition: all 0.2s ease;
+  border: 1px solid rgba(255,255,255,0.18);
   white-space: nowrap;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  line-height: 1.2;
+  letter-spacing: 0.2px;
 }
 
 .edit-dish-btn {
-  background: rgba(245, 158, 11, 0.08);
-  color: #d97706;
-  border-color: rgba(245, 158, 11, 0.25);
+  background: rgba(30, 30, 30, 0.72);
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
 }
 
 .edit-dish-btn:hover {
-  background: #f59e0b;
-  color: white;
-  border-color: #f59e0b;
+  background: rgba(245, 158, 11, 0.88);
+  border-color: rgba(245,158,11,0.5);
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+  box-shadow: 0 4px 14px rgba(245, 158, 11, 0.35);
 }
 
 .delete-dish-btn {
-  background: rgba(239, 68, 68, 0.08);
-  color: #ef4444;
-  border-color: rgba(239, 68, 68, 0.25);
+  background: rgba(30, 30, 30, 0.72);
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
 }
 
 .delete-dish-btn:hover {
-  background: #ef4444;
-  color: white;
-  border-color: #ef4444;
+  background: rgba(239, 68, 68, 0.88);
+  border-color: rgba(239,68,68,0.5);
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+  box-shadow: 0 4px 14px rgba(239, 68, 68, 0.35);
 }
 
 /* ===== Delete Confirmation Modal ===== */
@@ -1966,62 +2036,162 @@ export default {
   background: var(--bg-card-alt);
 }
 
-/* ===== Responsive: Admin Sections ===== */
+/* ===== Responsive ===== */
 @media (max-width: 768px) {
+  .banner {
+    height: 280px;
+  }
+  .banner-content {
+    padding: 32px 24px;
+  }
+  .banner-content h1 {
+    font-size: 28px;
+  }
+  .banner-meta {
+    font-size: 14px;
+  }
+  .action-bar {
+    flex-direction: column;
+    gap: 12px;
+    padding: 16px 0;
+  }
+  .back-btn, .favorite-btn {
+    width: 100%;
+    justify-content: center;
+  }
+  .info-section {
+    grid-template-columns: 1fr;
+    gap: 14px;
+    padding-bottom: 28px;
+  }
+  .info-card {
+    padding: 18px;
+    border-radius: 14px;
+  }
+  .info-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+  }
+  .info-value {
+    font-size: 14px;
+  }
+  .dishes-section, .review-section {
+    padding-top: 0;
+    padding-bottom: 28px;
+  }
+  .section-header h2 {
+    font-size: 18px;
+  }
+  .review-form {
+    flex-direction: column;
+  }
+  .review-form-card {
+    padding: 20px;
+  }
+  .form-input-wrap input {
+    min-width: 0;
+  }
+
   .banner-edit {
     flex-direction: column;
     align-items: stretch;
     padding: 20px;
   }
-
   .banner-edit input {
     min-width: 0;
   }
-
   .add-dish-card {
     padding: 20px;
   }
-
   .add-dish-form {
     flex-direction: column;
     align-items: stretch;
   }
-
   .add-dish-form input {
     min-width: 0;
     width: 100%;
     flex: none;
   }
-
   .add-dish-form .primary-btn,
   .add-dish-form .cancel-btn {
     width: 100%;
     justify-content: center;
   }
-
   .dish-admin-actions {
     gap: 6px;
   }
 }
 
 @media (max-width: 480px) {
-  .banner-edit {
+  .banner {
+    height: 220px;
+  }
+  .banner-content {
+    padding: 24px 16px;
+  }
+  .banner-content h1 {
+    font-size: 22px;
+  }
+  .banner-meta {
+    font-size: 13px;
+  }
+  .info-card {
+    padding: 14px;
+    border-radius: 12px;
+    gap: 12px;
+  }
+  .info-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+  }
+  .info-icon svg {
+    width: 16px;
+    height: 16px;
+  }
+  .info-label {
+    font-size: 10px;
+  }
+  .info-value {
+    font-size: 13px;
+  }
+  .section-header h2 {
+    font-size: 16px;
+    gap: 8px;
+  }
+  .section-header h2 svg {
+    width: 18px;
+    height: 18px;
+  }
+  .review-card {
     padding: 16px;
     border-radius: 14px;
   }
+  .review-comment {
+    font-size: 13px;
+  }
+  .submit-btn {
+    width: 100%;
+    justify-content: center;
+  }
 
+  .banner-edit {
+    padding: 16px;
+    border-radius: 14px;
+    margin-bottom: 15px;
+  }
   .add-dish-card {
     padding: 16px;
     border-radius: 14px;
   }
-
   .modal-box {
     padding: 24px;
     border-radius: 16px;
   }
-
   .modal-actions {
     flex-direction: column;
   }
 }
 </style>
+

@@ -130,10 +130,10 @@ body {
   flex: 1;
 }
 
-/* Global 90% page container */
+/* Global page container */
 .page-container {
   width: 90%;
-  max-width: 1400px;
+  max-width: 1280px;
   margin-left: auto;
   margin-right: auto;
 }
@@ -251,19 +251,64 @@ a:hover {
 }
 
 /* ===== Responsive ===== */
+
+@media (max-width: 768px) {
+  .login input,
+  .register input,
+  .resto-form input {
+    max-width: 100%;
+    height: 46px;
+    font-size: 14px;
+  }
+
+  .primary-btn {
+    max-width: 100%;
+    height: 46px;
+    font-size: 14px;
+  }
+
+  .swiper-button-next,
+  .swiper-button-prev {
+    width: 34px !important;
+    height: 34px !important;
+  }
+
+  .swiper-button-next::after,
+  .swiper-button-prev::after {
+    font-size: 11px !important;
+  }
+}
+
 @media (max-width: 480px) {
   .login input,
   .register input,
   .resto-form input {
     max-width: 100%;
     height: 44px;
-    font-size: 14px;
+    font-size: 13px;
+    margin-bottom: 12px;
   }
 
   .primary-btn {
     max-width: 100%;
     height: 44px;
-    font-size: 14px;
+    font-size: 13px;
+  }
+
+  .swiper-button-next,
+  .swiper-button-prev {
+    width: 30px !important;
+    height: 30px !important;
+  }
+
+  .swiper-button-next::after,
+  .swiper-button-prev::after {
+    font-size: 10px !important;
+  }
+
+  .swiper-pagination-bullet {
+    width: 6px !important;
+    height: 6px !important;
   }
 }
 
@@ -318,7 +363,6 @@ svg {
 }
 }
 
-
 /* Animation css */
 .card {
   transition: all 0.3s ease;
@@ -332,8 +376,5 @@ svg {
 button {
   transition: all 0.3s ease;
 }
-
-button:hover {
-  transform: scale(1.05);
-}
 </style>
+
