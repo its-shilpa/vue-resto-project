@@ -119,7 +119,11 @@
     </section>
 
     <!-- About Section -->
-    <section v-if="!search" class="about-section page-container" data-aos="fade-up">
+    <section
+      v-if="!search"
+      class="about-section page-container"
+      data-aos="fade-up"
+    >
       <div class="about-grid">
         <!-- Left Content -->
         <div class="about-content">
@@ -234,7 +238,7 @@
       </div>
 
       <!-- Cards -->
-      <div v-for="(item, index) in paginatedRestaurants" :key="item.id" class="restaurant-card" data-aos="zoom-in" :data-aos-delay="index * 100">
+      <div>
         <h2 class="resto-card-head">Our Propular Resturants</h2>
       </div>
       <div
@@ -242,54 +246,68 @@
         v-if="!loading && filteredRestaurants.length"
       >
         <div
-          v-for="item in paginatedRestaurants"
+          v-for="(item, index) in paginatedRestaurants"
           :key="item.id"
           class="restaurant-card"
+          data-aos="zoom-in"
+          :data-aos-delay="index * 100"
           @click="
             $router.push({ name: 'RestaurantDetails', params: { id: item.id } })
           "
         >
           <div
-            class="card-image"
-            :style="{
-              backgroundImage: item.image
-                ? `url(${item.image})`
-                : `url(https://via.placeholder.com/400x300?text=No+Image)`,
-            }"
+            v-for="item in paginatedRestaurants"
+            :key="item.id"
+            class="restaurant-card"
+            @click="
+              $router.push({
+                name: 'RestaurantDetails',
+                params: { id: item.id },
+              })
+            "
           >
-            <div class="card-image-overlay"></div>
-            <!-- <div class="card-badge">#{{ item.id }}</div> -->
-          </div>
-          <div class="restaurant-info">
-            <h3 class="restaurant-name">{{ item.name }}</h3>
-            <div class="restaurant-detail">
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                width="14"
-                height="14"
-              >
-                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" />
-                <circle cx="12" cy="10" r="3" />
-              </svg>
-              <span>{{ item.address }}</span>
+            <div
+              class="card-image"
+              :style="{
+                backgroundImage: item.image
+                  ? `url(${item.image})`
+                  : `url(https://via.placeholder.com/400x300?text=No+Image)`,
+              }"
+            >
+              <div class="card-image-overlay"></div>
+              <!-- <div class="card-badge">#{{ item.id }}</div> -->
             </div>
-            <div class="restaurant-detail">
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                width="14"
-                height="14"
-              >
-                <path
-                  d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"
-                />
-              </svg>
-              <span>{{ item.contact }}</span>
+            <div class="restaurant-info">
+              <h3 class="restaurant-name">{{ item.name }}</h3>
+              <div class="restaurant-detail">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  width="14"
+                  height="14"
+                >
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" />
+                  <circle cx="12" cy="10" r="3" />
+                </svg>
+                <span>{{ item.address }}</span>
+              </div>
+              <div class="restaurant-detail">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  width="14"
+                  height="14"
+                >
+                  <path
+                    d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"
+                  />
+                </svg>
+                <span>{{ item.contact }}</span>
+              </div>
             </div>
           </div>
         </div>
@@ -382,9 +400,20 @@
             <div class="dish-info">
               <h4>{{ dish.name }}</h4>
               <p class="dish-restaurant">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13">
-                  <path d="M18 8h1a4 4 0 010 8h-1M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z"/>
-                  <line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/>
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  width="13"
+                  height="13"
+                >
+                  <path
+                    d="M18 8h1a4 4 0 010 8h-1M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z"
+                  />
+                  <line x1="6" y1="1" x2="6" y2="4" />
+                  <line x1="10" y1="1" x2="10" y2="4" />
+                  <line x1="14" y1="1" x2="14" y2="4" />
                 </svg>
                 {{ dish.restaurant }}
               </p>
@@ -399,9 +428,20 @@
       <div class="stats-container" data-aos="fade-right">
         <div class="stat-card">
           <div class="stat-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="28" height="28">
-              <path d="M18 8h1a4 4 0 010 8h-1M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z"/>
-              <line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/>
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              width="28"
+              height="28"
+            >
+              <path
+                d="M18 8h1a4 4 0 010 8h-1M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z"
+              />
+              <line x1="6" y1="1" x2="6" y2="4" />
+              <line x1="10" y1="1" x2="10" y2="4" />
+              <line x1="14" y1="1" x2="14" y2="4" />
             </svg>
           </div>
           <h3 class="stat-number">{{ restaurantCount }}+</h3>
@@ -410,9 +450,18 @@
 
         <div class="stat-card">
           <div class="stat-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="28" height="28">
-              <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/>
-              <path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/>
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              width="28"
+              height="28"
+            >
+              <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
+              <circle cx="9" cy="7" r="4" />
+              <path d="M23 21v-2a4 4 0 00-3-3.87" />
+              <path d="M16 3.13a4 4 0 010 7.75" />
             </svg>
           </div>
           <h3 class="stat-number">{{ usersCount }}k+</h3>
@@ -421,8 +470,16 @@
 
         <div class="stat-card">
           <div class="stat-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="28" height="28">
-              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/>
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              width="28"
+              height="28"
+            >
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" />
+              <circle cx="12" cy="10" r="3" />
             </svg>
           </div>
           <h3 class="stat-number">{{ citiesCount }}+</h3>
@@ -433,7 +490,6 @@
 
     <!-- Special Offers Section -->
     <section v-if="!search" class="offers-banner-section page-container">
-
       <div class="section-header" data-aos="fade-left">
         <h2>Special Offers</h2>
         <p>Don't miss these exclusive deals</p>
@@ -447,12 +503,13 @@
         :autoplay="{ delay: 3500, disableOnInteraction: false }"
         class="offers-swiper"
       >
-
         <!-- Banner 1 -->
         <SwiperSlide>
           <div
             class="offer-banner"
-            style="background-image:url('https://images.pexels.com/photos/70497/pexels-photo-70497.jpeg')"
+            style="
+              background-image: url('https://images.pexels.com/photos/70497/pexels-photo-70497.jpeg');
+            "
           >
             <div class="offer-overlay"></div>
 
@@ -463,9 +520,7 @@
 
               <p>Get 20% off on burgers and fries this weekend</p>
 
-              <button class="offer-btn">
-                Explore Now
-              </button>
+              <button class="offer-btn">Explore Now</button>
             </div>
           </div>
         </SwiperSlide>
@@ -474,7 +529,9 @@
         <SwiperSlide>
           <div
             class="offer-banner"
-            style="background-image:url('https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg')"
+            style="
+              background-image: url('https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg');
+            "
           >
             <div class="offer-overlay"></div>
 
@@ -485,9 +542,7 @@
 
               <p>Buy one pizza and get another free</p>
 
-              <button class="offer-btn">
-                Grab Deal
-              </button>
+              <button class="offer-btn">Grab Deal</button>
             </div>
           </div>
         </SwiperSlide>
@@ -496,7 +551,9 @@
         <SwiperSlide>
           <div
             class="offer-banner"
-            style="background-image:url('https://images.pexels.com/photos/376464/pexels-photo-376464.jpeg')"
+            style="
+              background-image: url('https://images.pexels.com/photos/376464/pexels-photo-376464.jpeg');
+            "
           >
             <div class="offer-overlay"></div>
 
@@ -507,20 +564,15 @@
 
               <p>Free delivery on Italian restaurants today</p>
 
-              <button class="offer-btn">
-                Order Now
-              </button>
+              <button class="offer-btn">Order Now</button>
             </div>
           </div>
         </SwiperSlide>
-
       </Swiper>
-
     </section>
 
     <!-- Customer Reviews -->
     <section v-if="!search" class="reviews-section page-container">
-
       <div class="section-header" data-aos="fade-up">
         <h2>What Our Customers Say</h2>
         <p>Real reviews from our restaurant visitors</p>
@@ -534,16 +586,15 @@
         :autoplay="{ delay: 3000, disableOnInteraction: false }"
         :breakpoints="{
           640: { slidesPerView: 2 },
-          1024: { slidesPerView: 3 }
+          1024: { slidesPerView: 3 },
         }"
         class="reviews-swiper"
       >
-
-        <SwiperSlide v-for="(review,index) in allReviews" :key="index">
+        <SwiperSlide v-for="(review, index) in allReviews" :key="index">
           <div class="review-card">
             <div class="review-header">
               <div class="review-avatar">
-                {{ review.user ? review.user.charAt(0).toUpperCase() : 'U' }}
+                {{ review.user ? review.user.charAt(0).toUpperCase() : "U" }}
               </div>
               <div class="review-rating-badge">
                 <span class="review-rating-star">★</span>
@@ -558,18 +609,27 @@
             <div class="review-user">
               <strong>{{ review.user }}</strong>
               <span class="review-restaurant-tag">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12">
-                  <path d="M18 8h1a4 4 0 010 8h-1M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z"/>
-                  <line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/>
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  width="12"
+                  height="12"
+                >
+                  <path
+                    d="M18 8h1a4 4 0 010 8h-1M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z"
+                  />
+                  <line x1="6" y1="1" x2="6" y2="4" />
+                  <line x1="10" y1="1" x2="10" y2="4" />
+                  <line x1="14" y1="1" x2="14" y2="4" />
                 </svg>
                 {{ review.restaurant }}
               </span>
             </div>
           </div>
         </SwiperSlide>
-
       </Swiper>
-
     </section>
 
     <!-- CTA Section -->
@@ -586,19 +646,53 @@
         </div>
         <div class="cta-content">
           <span class="cta-badge">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              width="14"
+              height="14"
+            >
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+            </svg>
             Trusted by thousands
           </span>
-          <h2>Ready to Discover<br/>Amazing Food?</h2>
-          <p>Join our growing community of food lovers. Explore hundreds of restaurants, discover unique dishes, and share your favorites.</p>
+          <h2>Ready to Discover<br />Amazing Food?</h2>
+          <p>
+            Join our growing community of food lovers. Explore hundreds of
+            restaurants, discover unique dishes, and share your favorites.
+          </p>
           <div class="cta-buttons">
-            <button class="cta-primary" @click="$router.push('/all-restaurants')">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <button
+              class="cta-primary"
+              @click="$router.push('/all-restaurants')"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                width="18"
+                height="18"
+              >
+                <circle cx="11" cy="11" r="8" />
+                <line x1="21" y1="21" x2="16.65" y2="16.65" />
+              </svg>
               Explore Restaurants
             </button>
             <button class="cta-secondary" @click="$router.push('/profile')">
               View Your Profile
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><polyline points="9 18 15 12 9 6"/></svg>
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                width="16"
+                height="16"
+              >
+                <polyline points="9 18 15 12 9 6" />
+              </svg>
             </button>
           </div>
         </div>
@@ -760,10 +854,10 @@ export default {
     },
 
     highlight(text) {
-      if (!text) return ""
-      if (!this.search) return text
-      const regex = new RegExp(`(${this.search})`, "gi")
-      return text.replace(regex, `<span class="search-highlight">$1</span>`)
+      if (!text) return "";
+      if (!this.search) return text;
+      const regex = new RegExp(`(${this.search})`, "gi");
+      return text.replace(regex, `<span class="search-highlight">$1</span>`);
     },
 
     //Review Sec
@@ -776,19 +870,16 @@ export default {
             restaurant.reviews.forEach((review) => {
               reviews.push({
                 ...review,
-                restaurant: restaurant.name
+                restaurant: restaurant.name,
               });
             });
           }
         });
         this.allReviews = reviews;
-
       } catch (error) {
-
         console.log("Review loading error");
       }
-
-    }
+    },
   },
 
   computed: {
@@ -811,13 +902,14 @@ export default {
     },
 
     filteredDishes() {
-    if (!this.search.trim()) return []
+      if (!this.search.trim()) return [];
 
-      return this.allPopularDishes.filter(d =>
-        d.name.toLowerCase().includes(this.search.toLowerCase()) ||
-        d.restaurant.toLowerCase().includes(this.search.toLowerCase())
-      )
-    }
+      return this.allPopularDishes.filter(
+        (d) =>
+          d.name.toLowerCase().includes(this.search.toLowerCase()) ||
+          d.restaurant.toLowerCase().includes(this.search.toLowerCase()),
+      );
+    },
   },
 
   watch: {
@@ -1578,7 +1670,8 @@ export default {
   border-radius: 20px;
   background: linear-gradient(135deg, #ffffff 0%, #f0f5ff 100%);
   border: 1px solid rgba(59, 130, 246, 0.12);
-  box-shadow: 0 8px 30px rgba(30, 64, 175, 0.08), inset 0 1px 0 rgba(255,255,255,0.8);
+  box-shadow: 0 8px 30px rgba(30, 64, 175, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   overflow: hidden;
@@ -1588,14 +1681,19 @@ export default {
   content: "";
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle at 50% 0%, rgba(59, 130, 246, 0.15), transparent 70%);
+  background: radial-gradient(
+    circle at 50% 0%,
+    rgba(59, 130, 246, 0.15),
+    transparent 70%
+  );
   opacity: 0;
   transition: opacity 0.4s ease;
 }
 
 .stat-card:hover {
   transform: translateY(-8px) scale(1.02);
-  box-shadow: 0 20px 50px rgba(30, 64, 175, 0.18), 0 0 0 1px rgba(59,130,246,0.2);
+  box-shadow: 0 20px 50px rgba(30, 64, 175, 0.18),
+    0 0 0 1px rgba(59, 130, 246, 0.2);
   border-color: rgba(59, 130, 246, 0.3);
 }
 
@@ -1732,10 +1830,8 @@ export default {
   border-radius: 20px;
   overflow: hidden;
   border: 1px solid rgba(99, 102, 241, 0.12);
-  box-shadow:
-    0 8px 32px rgba(30, 64, 175, 0.08),
-    0 2px 8px rgba(15, 23, 42, 0.04),
-    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  box-shadow: 0 8px 32px rgba(30, 64, 175, 0.08),
+    0 2px 8px rgba(15, 23, 42, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.9);
   transition: all 0.45s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -1773,10 +1869,8 @@ export default {
 .dish-card:hover {
   transform: translateY(-10px) scale(1.02);
   border-color: rgba(59, 130, 246, 0.35);
-  box-shadow:
-    0 24px 56px rgba(30, 64, 175, 0.18),
-    0 8px 24px rgba(59, 130, 246, 0.1),
-    0 0 0 1px rgba(99, 102, 241, 0.15);
+  box-shadow: 0 24px 56px rgba(30, 64, 175, 0.18),
+    0 8px 24px rgba(59, 130, 246, 0.1), 0 0 0 1px rgba(99, 102, 241, 0.15);
 }
 
 .dish-card:hover::before {
@@ -1789,8 +1883,12 @@ export default {
 }
 
 @keyframes shimmerLine {
-  0% { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
 }
 
 /* --- Dish Image --- */
@@ -1922,9 +2020,15 @@ export default {
 }
 
 @keyframes heartPop {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.25) rotate(-8deg); }
-  100% { transform: scale(1); }
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.25) rotate(-8deg);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
 /* --- Responsive --- */
@@ -1996,7 +2100,6 @@ export default {
   text-align: center;
 }
 
-
 /* ===== Special Offers ===== */
 
 .offers-banner-section {
@@ -2051,8 +2154,13 @@ export default {
 }
 
 @keyframes tagPulse {
-  0%, 100% { box-shadow: 0 4px 14px rgba(239, 68, 68, 0.4); }
-  50% { box-shadow: 0 4px 24px rgba(239, 68, 68, 0.6); }
+  0%,
+  100% {
+    box-shadow: 0 4px 14px rgba(239, 68, 68, 0.4);
+  }
+  50% {
+    box-shadow: 0 4px 24px rgba(239, 68, 68, 0.6);
+  }
 }
 
 .offer-banner-content h2 {
@@ -2137,10 +2245,8 @@ export default {
   border-radius: 22px;
   padding: 28px 26px 24px;
   border: 1px solid rgba(99, 102, 241, 0.1);
-  box-shadow:
-    0 8px 32px rgba(30, 64, 175, 0.07),
-    0 2px 8px rgba(15, 23, 42, 0.04),
-    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  box-shadow: 0 8px 32px rgba(30, 64, 175, 0.07),
+    0 2px 8px rgba(15, 23, 42, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.9);
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -2181,10 +2287,8 @@ export default {
 .review-card:hover {
   transform: translateY(-8px) scale(1.01);
   border-color: rgba(59, 130, 246, 0.3);
-  box-shadow:
-    0 24px 56px rgba(30, 64, 175, 0.14),
-    0 8px 20px rgba(59, 130, 246, 0.08),
-    0 0 0 1px rgba(99, 102, 241, 0.12);
+  box-shadow: 0 24px 56px rgba(30, 64, 175, 0.14),
+    0 8px 20px rgba(59, 130, 246, 0.08), 0 0 0 1px rgba(99, 102, 241, 0.12);
 }
 
 .review-card:hover::before {
@@ -2376,7 +2480,11 @@ export default {
   height: 400px;
   top: -120px;
   right: -80px;
-  background: radial-gradient(circle, rgba(59, 130, 246, 0.15), transparent 70%);
+  background: radial-gradient(
+    circle,
+    rgba(59, 130, 246, 0.15),
+    transparent 70%
+  );
 }
 
 .cta-circle-2 {
@@ -2392,7 +2500,11 @@ export default {
   height: 180px;
   top: 20%;
   right: 30%;
-  background: radial-gradient(circle, rgba(99, 102, 241, 0.12), transparent 70%);
+  background: radial-gradient(
+    circle,
+    rgba(99, 102, 241, 0.12),
+    transparent 70%
+  );
 }
 
 .cta-emoji {
@@ -2402,15 +2514,40 @@ export default {
   animation: ctaFloat 8s ease-in-out infinite;
 }
 
-.cta-emoji-1 { top: 15%; right: 12%; animation-delay: 0s; }
-.cta-emoji-2 { bottom: 20%; right: 25%; animation-delay: 2s; }
-.cta-emoji-3 { top: 25%; left: 8%; animation-delay: 4s; font-size: 28px; }
-.cta-emoji-4 { bottom: 15%; left: 20%; animation-delay: 6s; font-size: 30px; }
+.cta-emoji-1 {
+  top: 15%;
+  right: 12%;
+  animation-delay: 0s;
+}
+.cta-emoji-2 {
+  bottom: 20%;
+  right: 25%;
+  animation-delay: 2s;
+}
+.cta-emoji-3 {
+  top: 25%;
+  left: 8%;
+  animation-delay: 4s;
+  font-size: 28px;
+}
+.cta-emoji-4 {
+  bottom: 15%;
+  left: 20%;
+  animation-delay: 6s;
+  font-size: 30px;
+}
 
 @keyframes ctaFloat {
-  0%, 100% { transform: translateY(0) rotate(0deg); }
-  25% { transform: translateY(-12px) rotate(5deg); }
-  75% { transform: translateY(8px) rotate(-3deg); }
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-12px) rotate(5deg);
+  }
+  75% {
+    transform: translateY(8px) rotate(-3deg);
+  }
 }
 
 /* Content side */
@@ -2539,7 +2676,9 @@ export default {
   }
   .cta-content h2 {
     font-size: 22px;
-    br { display: none; }
+    br {
+      display: none;
+    }
   }
   .cta-content p {
     font-size: 13px;
@@ -2554,6 +2693,9 @@ export default {
     justify-content: center;
     padding: 12px 24px;
   }
-  .cta-emoji-1, .cta-emoji-2 { display: none; }
+  .cta-emoji-1,
+  .cta-emoji-2 {
+    display: none;
+  }
 }
 </style>
