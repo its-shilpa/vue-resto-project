@@ -12,6 +12,7 @@ import RestaurantDetails from "./components/RestaurantDetails.vue";
 import FavoritePage from "./components/FavoritePage.vue";
 import AllRestaurants from "./components/AllRestaurants.vue";
 import CartPage from "./components/CartPage.vue";
+import CheckoutPage from "./components/CheckoutPage.vue";
 import OrderHistory from "./components/OrderHistory.vue";
 
 const routes = [
@@ -83,6 +84,12 @@ const routes = [
     path: "/cart",
     name: "Cart",
     component: CartPage
+  },
+  {
+    path: "/checkout",
+    name: "Checkout",
+    component: CheckoutPage,
+    meta: { requiresAuth: true }
   },
   {
     path: "/orders",

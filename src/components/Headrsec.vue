@@ -336,7 +336,7 @@ export default {
 }
 
 /* ===== Mobile ===== */
-@media (max-width: 768px) {
+@media (max-width: 992px) {
   .hamburger {
     display: flex;
   }

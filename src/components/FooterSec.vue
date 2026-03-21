@@ -215,22 +215,23 @@ export default {
 }
 
 /* ===== Responsive ===== */
-@media (max-width: 900px) {
+@media (max-width: 992px) {
   .footer-container {
     grid-template-columns: 1fr 1fr;
-    gap: 28px;
+    gap: 32px;
   }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 768px) {
   .footer-container {
     grid-template-columns: 1fr;
     text-align: center;
-    gap: 24px;
+    gap: 28px;
   }
 
   .footer-brand p {
-    max-width: 100%;
+    margin: 0 auto;
+    max-width: 90%;
   }
 
   .footer-logo {

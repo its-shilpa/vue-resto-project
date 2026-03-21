@@ -68,20 +68,11 @@
       <div class="resto-toolbar" data-aos="fade-up">
         <div class="resto-toolbar-left">
           <div class="toolbar-icon">
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              width="18"
-              height="18"
-            >
-              <path
-                d="M18 8h1a4 4 0 010 8h-1M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z"
-              />
-              <line x1="6" y1="1" x2="6" y2="4" />
-              <line x1="10" y1="1" x2="10" y2="4" />
-              <line x1="14" y1="1" x2="14" y2="4" />
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+              <path d="M18 8h1a4 4 0 010 8h-1M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z"/>
+              <line x1="6" y1="1" x2="6" y2="4"/>
+              <line x1="10" y1="1" x2="10" y2="4"/>
+              <line x1="14" y1="1" x2="14" y2="4"/>
             </svg>
           </div>
           <div class="toolbar-text">
@@ -89,6 +80,22 @@
             <span class="toolbar-label"> Restaurants Found</span>
           </div>
         </div>
+
+        <div class="resto-toolbar-right">
+          <select v-model="sortBy" class="filter-select">
+            <option value="default">Default Sort</option>
+            <option value="ratingDesc">Best Rated</option>
+            <option value="nameAsc">Name: A to Z</option>
+            <option value="nameDesc">Name: Z to A</option>
+          </select>
+
+          <select v-model="minRating" class="filter-select">
+            <option :value="0">All Ratings</option>
+            <option :value="4">4.0+ Stars</option>
+            <option :value="3">3.0+ Stars</option>
+          </select>
+        </div>
+
         <div class="toolbar-page-badge">
           Page <span>{{ currentPage }}</span> /
           <span>{{ totalPages || 1 }}</span>
@@ -272,6 +279,8 @@ export default {
       loading: false,
       error: null,
       search: "",
+      sortBy: "default",
+      minRating: 0,
       currentPage: 1,
       perPage: 8,
     };
@@ -287,7 +296,16 @@ export default {
       this.error = null;
       try {
         const result = await API.get("/resturent");
-        this.restaurants = result.data.reverse();
+        const rawData = result.data.reverse();
+        
+        this.restaurants = rawData.map(r => {
+          let avgRating = 0;
+          if (r.reviews && r.reviews.length > 0) {
+            const sum = r.reviews.reduce((acc, rev) => acc + (Number(rev.rating) || 0), 0);
+            avgRating = sum / r.reviews.length;
+          }
+          return { ...r, averageRating: avgRating };
+        });
       } catch (err) {
         this.error = "Failed to load restaurants. Please try again.";
       } finally {
@@ -305,14 +323,33 @@ export default {
 
   computed: {
     filteredRestaurants() {
-      const term = (this.search || "").toLowerCase().trim();
-      if (!term) return this.restaurants;
+      let result = this.restaurants;
 
-      return this.restaurants.filter((item) => {
-        const name = (item.name || "").toLowerCase();
-        const addr = (item.address || "").toLowerCase();
-        return name.includes(term) || addr.includes(term);
-      });
+      // 1. Min Rating Filter
+      if (this.minRating > 0) {
+        result = result.filter(r => r.averageRating >= this.minRating);
+      }
+
+      // 2. Search Text Filter
+      const term = (this.search || "").toLowerCase().trim();
+      if (term) {
+        result = result.filter((item) => {
+          const name = (item.name || "").toLowerCase();
+          const addr = (item.address || "").toLowerCase();
+          return name.includes(term) || addr.includes(term);
+        });
+      }
+
+      // 3. Sort Filter
+      if (this.sortBy === "nameAsc") {
+        result = [...result].sort((a, b) => (a.name || "").localeCompare(b.name || ""));
+      } else if (this.sortBy === "nameDesc") {
+        result = [...result].sort((a, b) => (b.name || "").localeCompare(a.name || ""));
+      } else if (this.sortBy === "ratingDesc") {
+        result = [...result].sort((a, b) => (b.averageRating || 0) - (a.averageRating || 0));
+      }
+
+      return result;
     },
 
     paginatedRestaurants() {
@@ -327,6 +364,12 @@ export default {
 
   watch: {
     search() {
+      this.currentPage = 1;
+    },
+    sortBy() {
+      this.currentPage = 1;
+    },
+    minRating() {
       this.currentPage = 1;
     },
   },
@@ -498,7 +541,54 @@ export default {
 .resto-toolbar-left {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 12px;
+}
+
+.resto-toolbar-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  justify-content: flex-end;
+  margin-right: 16px;
+}
+
+.filter-select {
+  padding: 10px 42px 10px 20px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  background-color: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(8px);
+  color: #fff;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  appearance: none;
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='rgba(255,255,255,0.6)'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  background-size: 14px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.filter-select:hover {
+  border-color: rgba(245, 158, 11, 0.4);
+  background-color: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+.filter-select:focus {
+  outline: none;
+  border-color: #f59e0b;
+  box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.15);
+}
+
+.filter-select option {
+  background-color: #1e293b;
+  color: #fff;
+  font-weight: 500;
 }
 
 .toolbar-icon {
@@ -864,8 +954,13 @@ export default {
   }
   .resto-toolbar {
     flex-direction: column;
-    gap: 8px;
+    gap: 16px;
     text-align: center;
+  }
+  .resto-toolbar-right {
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-right: 0;
   }
   .resto-card {
     height: 300px;
@@ -923,6 +1018,9 @@ export default {
   }
   .resto-card-inner h3 {
     font-size: 18px;
+  }
+  .filter-select {
+    width: 100%;
   }
   .pagination {
     margin-top: 24px;

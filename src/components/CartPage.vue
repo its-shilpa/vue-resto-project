@@ -153,7 +153,6 @@
 
 <script>
 import cartService from "@/services/cartService";
-import API from "@/services/api";
 
 export default {
   data() {
@@ -198,39 +197,17 @@ export default {
     window.dispatchEvent(new Event("cart-updated"));
     },
 
-    async checkout() {
+    checkout() {
       const user = JSON.parse(localStorage.getItem("user"));
 
       if (!user) {
-        alert("Please login first");
+        if (window.$toast) window.$toast.show("Please login to proceed to checkout");
+        else alert("Please login first");
+        this.$router.push("/login");
         return;
       }
 
-      const order = {
-        userId: user.id,
-        items: this.cart,
-        total: this.finalTotal,
-        status: "placed",
-        createdAt: new Date(),
-      };
-
-      try {
-        await API.post("/orders", order);
-        cartService.clearCart();
-        window.dispatchEvent(new Event("cart-updated"));
-
-        if (window.$toast) {
-          window.$toast.show("📦 Order placed successfully!");
-        } else {
-          alert("Order placed successfully!");
-        }
-
-        setTimeout(() => {
-          this.$router.push("/orders");
-        }, 1500);
-      } catch (e) {
-        console.error("Checkout failed", e);
-      }
+      this.$router.push("/checkout");
     },
 
     increaseQty(item) {
@@ -335,7 +312,8 @@ export default {
 }
 
 .cart-title span {
-  background: linear-gradient(135deg, #3b82f6, #60a5fa);
+  /* background: linear-gradient(135deg, #3b82f6, #60a5fa); */
+  background: linear-gradient(135deg, #fbbf24, #f59e0b);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -364,7 +342,7 @@ export default {
   background: white;
   border-radius: 16px;
   border: 1px solid var(--border);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
   overflow: hidden;
 }
 
@@ -508,7 +486,7 @@ export default {
   background: white;
   border-radius: 16px;
   border: 1px solid var(--border);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
   padding: 24px;
   position: sticky;
   top: 88px;
