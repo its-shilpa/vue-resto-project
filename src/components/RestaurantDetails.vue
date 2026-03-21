@@ -905,7 +905,7 @@ export default {
   overflow: hidden;
   cursor: pointer;
   height: 320px;
-  background: #0f172a;
+  /* background: #0f172a; */
   border: 2px solid transparent;
   transition: all 0.45s cubic-bezier(0.4, 0, 0.2, 1);
 }
