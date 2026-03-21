@@ -17,7 +17,12 @@ export default {
   },
 
   async logout(userId) {
-    await API.patch(`/users/${userId}`, { isLoggedIn: false });
-    localStorage.removeItem("user");
+    try {
+      await API.patch(`${API}/${userId}`, { isLoggedIn: false });
+    } catch (e) {
+      console.warn("User not found in backend");
+    }
+
+    localStorage.removeItem("user"); // ALWAYS clear
   }
 };

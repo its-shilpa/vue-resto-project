@@ -773,17 +773,23 @@ export default {
 
     async loadData() {
       const user = localStorage.getItem("user");
-
       if (!user) {
         this.$router.push({ name: "SignUp" });
         return;
       }
-
       try {
         const parsedUser = JSON.parse(user);
-        this.name = parsedUser.name || "";
+        // 🔥 verify from backend
+        const res = await API.get(`/users/${parsedUser.id}`);
+
+        if (!res.data) {
+          throw new Error("User not found");
+        }
+        this.name = res.data.name;
       } catch (e) {
-        console.error("Invalid user data", e);
+        console.error("Invalid user → logging out", e);
+        localStorage.removeItem("user"); // 🔥 clear fake login
+        this.$router.push({ name: "SignUp" });
       }
     },
 

@@ -77,6 +77,8 @@ export default {
       const user = JSON.parse(localStorage.getItem("user"));
       if (user) {
         await AuthService.logout(user.id);
+      } else {
+        localStorage.removeItem("user");
       }
       this.menuOpen = false;
       this.$router.push("/login");
