@@ -281,6 +281,7 @@ export default {
     this.getRestaurants();
   },
 
+  
   methods: {
     async getRestaurants() {
       this.loading = true;
