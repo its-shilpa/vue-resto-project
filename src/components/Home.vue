@@ -1012,6 +1012,12 @@ export default {
   transition: all 0.3s ease;
 }
 
+@media (max-width: 480px ) {
+  .hero-search input {
+    width: 90%;
+  }
+}
+
 .hero-search input::placeholder {
   color: rgba(255, 255, 255, 0.35);
 }
@@ -1077,7 +1083,7 @@ export default {
     ),
     linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
   border-radius: 28px;
-  padding: 48px 28px 60px;
+  padding: 48px 0px 60px;
   margin-top: -40px;
 }
 
@@ -1424,7 +1430,7 @@ export default {
   }
 
   .content-section {
-    padding: 32px 20px 44px;
+    padding: 40px 0px 40px;
     border-radius: 24px;
     margin-top: -36px;
   }
@@ -1519,7 +1525,7 @@ export default {
   }
 
   .content-section {
-    padding: 24px 16px 36px;
+    padding: 40px 0px 40px;
     border-radius: 20px;
     margin-top: -32px;
   }
@@ -1576,7 +1582,7 @@ export default {
 /* ===== About Section ===== */
 
 .about-section {
-  padding: 70px 28px;
+  padding: 70px 0px;
   margin-top: -20px;
 }
 
@@ -1639,7 +1645,7 @@ export default {
 
 @media (max-width: 768px) {
   .about-section {
-    padding: 40px 20px;
+    padding: 50px 0px;
   }
   .about-grid {
     grid-template-columns: 1fr;
@@ -1655,7 +1661,7 @@ export default {
 
 @media (max-width: 480px) {
   .about-section {
-    padding: 30px 16px;
+    padding: 40px 0px;
   }
   .about-title {
     font-size: 20px;

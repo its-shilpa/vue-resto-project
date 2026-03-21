@@ -196,7 +196,7 @@
           v-for="(dish, index) in restaurant.popularDishes"
           :key="index"
         >
-          <div class="dish-card" data-aos="fade-up">
+          <div class="dish-card" data-aos="fade-up" :data-aos-delay="index * 100">
             <!-- Image -->
             <div class="dish-image-wrap">
               <img :src="dish.image" :alt="dish.name" />
@@ -330,7 +330,7 @@
         class="review-swiper"
       >
         <SwiperSlide v-for="(review, index) in restaurant.reviews" :key="index">
-          <div class="review-card">
+          <div class="review-card" data-aos="fade-up" :data-aos-delay="index * 100">
             <div class="review-header">
               <div class="review-avatar">
                 {{ review.user?.charAt(0)?.toUpperCase() || "U" }}

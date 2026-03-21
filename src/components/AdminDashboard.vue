@@ -89,7 +89,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="item in paginatedRestaurants" :key="item.id">
+              <tr v-for="(item, index) in paginatedRestaurants" :key="item.id" data-aos="fade-up" :data-aos-delay="index * 50">
                 <td class="td-id"><span class="id-badge">#{{ item.id }}</span></td>
                 <td class="td-name">{{ item.name }}</td>
                 <td>{{ item.contact }}</td>

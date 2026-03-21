@@ -41,10 +41,12 @@ Dishes
 <div v-if="favoriteRestaurants.length" class="favorite-grid" data-aos="fade-up">
 
 <div
-v-for="restaurant in favoriteRestaurants"
+v-for="(restaurant, index) in favoriteRestaurants"
 :key="restaurant.id"
 class="favorite-item"
 @click="goToDetails(restaurant.id)"
+data-aos="fade-up"
+:data-aos-delay="index * 100"
 >
   <div class="fav-card-bg" :style="{ backgroundImage: `url(${restaurant.image || 'https://images.pexels.com/photos/11975899/pexels-photo-11975899.jpeg'})` }"></div>
   <div class="fav-card-overlay"></div>
@@ -86,9 +88,11 @@ class="favorite-item"
 <div v-if="favoriteDishes.length" class="favorites-grid" data-aos="fade-up">
 
 <div
-v-for="(dish,index) in favoriteDishes"
+v-for="(dish, index) in favoriteDishes"
 :key="index"
 class="dish-card"
+data-aos="fade-up"
+:data-aos-delay="index * 100"
 >
   <div class="dish-card-bg" :style="{ backgroundImage: `url(${dish.image})` }"></div>
   <div class="dish-card-overlay"></div>

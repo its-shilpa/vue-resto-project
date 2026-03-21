@@ -5,10 +5,10 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 
 AOS.init({
-  duration: 800,
+  duration: 1000,
   once: true,
-  easing: "ease-in-out",
-  offset: 80,
+  easing: "ease-out-cubic",
+  offset: 50,
 });
 
 createApp(App).use(router).mount('#app')
