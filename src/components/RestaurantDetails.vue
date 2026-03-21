@@ -759,6 +759,7 @@ export default {
   gap: 20px;
   padding-top: 0;
   padding-bottom: 40px;
+  padding-top: 20px;
 }
 
 .info-card {
