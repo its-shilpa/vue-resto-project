@@ -210,18 +210,21 @@
                 <span class="dish-price-tag">₹{{ dish.price }}</span>
               </div>
               <div class="dish-info-bottom">
-                <span class="dish-popular-tag">
+                <span class="dish-popular-tag" v-if="dish.popular">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="11" height="11">
                     <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
                   </svg>
                   Popular
                 </span>
-                <span class="dish-view-btn">
-                  View
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12">
-                    <polyline points="9 18 15 12 9 6"/>
+                <span style="flex:1"></span>
+                <button class="add-cart-btn" @click.stop="addToCart(dish)">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14">
+                    <circle cx="9" cy="21" r="1"/>
+                    <circle cx="20" cy="21" r="1"/>
+                    <path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/>
                   </svg>
-                </span>
+                  Add to Cart
+                </button>
               </div>
             </div>
             <!-- Admin Actions -->
@@ -398,6 +401,7 @@ import { Swiper, SwiperSlide } from "swiper/vue";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
+import cartService from "@/services/cartService";
 
 import { Navigation, Pagination } from "swiper/modules";
 
@@ -631,6 +635,22 @@ export default {
       this.$nextTick(() => {
         alert("Banner updated successfully");
       });
+    },
+
+    //add to cart
+    addToCart(dish) {
+      const item = {
+        id: dish.id || Date.now() + Math.random(), // ✅ ensure unique
+        name: dish.name,
+        price: dish.price,
+        image: dish.image,
+        restaurant: this.restaurant?.name || "Unknown" // ✅ important
+      };
+
+      cartService.addToCart(item);
+
+      window.dispatchEvent(new Event("cart-updated"));
+      window.$toast?.show("🛒 Added to cart!");
     },
   },
   computed: {
@@ -2193,6 +2213,31 @@ export default {
   .modal-actions {
     flex-direction: column;
   }
+}
+
+.add-cart-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+.add-cart-btn:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 6px 16px rgba(16, 185, 129, 0.4);
+}
+
+.add-cart-btn svg {
+  margin-top: -1px;
 }
 </style>
 

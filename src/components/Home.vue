@@ -53,7 +53,7 @@
 
     <!-- Search Results -->
     <section
-      v-if="search && (filteredRestaurants.length || filteredDishes.length)"
+      v-if="search"
       class="search-section page-container"
     >
       <!-- Restaurant Results -->
@@ -115,6 +115,19 @@
             </div>
           </div>
         </div>
+      </div>
+
+      <!-- Empty Search State -->
+      <div v-if="filteredRestaurants.length === 0 && filteredDishes.length === 0" class="empty-state" data-aos="zoom-in" style="margin-top: 40px; margin-bottom: 40px;">
+        <div class="empty-icon-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="40" height="40">
+            <circle cx="11" cy="11" r="8"/>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+        </div>
+        <h3>No matches found</h3>
+        <p>We couldn't find any restaurants or dishes matching "<strong>{{ search }}</strong>"</p>
+        <button class="clear-search-btn" @click="search = ''" style="margin-top: 16px; padding: 10px 20px; border-radius: 8px; border: none; background: var(--bg-card-alt); cursor: pointer; font-weight: 600;">Clear Search</button>
       </div>
     </section>
 
@@ -365,7 +378,8 @@
         :breakpoints="{
           480: { slidesPerView: 2 },
           768: { slidesPerView: 3 },
-          1024: { slidesPerView: 4 },
+          1024: { slidesPerView: 3 },
+          1200: { slidesPerView: 4 },
         }"
         class="home-dishes-swiper"
       >
@@ -406,6 +420,14 @@
                 </svg>
                 {{ dish.restaurant }}
               </p>
+              <button class="add-cart-btn" @click="addToCart(dish)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14">
+                  <circle cx="9" cy="21" r="1"/>
+                  <circle cx="20" cy="21" r="1"/>
+                  <path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/>
+                </svg>
+                Add to Cart
+              </button>
             </div>
           </div>
         </SwiperSlide>
@@ -697,6 +719,7 @@
 // import axios from "axios";
 import API from "@/services/api";
 import AOS from "aos";
+import cartService from "@/services/cartService";
 
 import { Swiper, SwiperSlide } from "swiper/vue";
 import "swiper/css";
@@ -763,7 +786,7 @@ export default {
 
       try {
         const result = await API.get("/resturent");
-        this.resturent = result.data;
+        this.resturent = result.data.reverse();
       } catch (err) {
         this.error = "Failed to load restaurants. Please try again.";
       } finally {
@@ -880,6 +903,22 @@ export default {
       } catch (error) {
         console.log("Review loading error");
       }
+    },
+
+    //Add to cart
+    addToCart(dish) {
+      const item = {
+        id: dish.id || Date.now() + Math.random(),
+        name: dish.name,
+        price: dish.price,
+        image: dish.image,
+        restaurant: this.restaurant?.name || "Unknown"
+      };
+
+      cartService.addToCart(item);
+
+      window.dispatchEvent(new Event("cart-updated"));
+      window.$toast?.show("🛒 Added to cart!");
     },
   },
 
@@ -2051,6 +2090,7 @@ export default {
   font-size: 12px;
   color: #64748b;
   font-weight: 500;
+  padding-bottom: 10px;
 }
 
 .dish-restaurant svg {

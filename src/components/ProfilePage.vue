@@ -250,6 +250,42 @@
         </div>
       </div>
 
+      <!-- Quick Actions Dashboard -->
+      <div class="quick-actions" v-if="!isEditing" data-aos="fade-up" data-aos-delay="100">
+        <h3 class="section-title">Quick Actions</h3>
+        <div class="actions-grid">
+          <div class="action-card" @click="$router.push('/favorites')">
+            <div class="action-icon action-fav">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24">
+                <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/>
+              </svg>
+            </div>
+            <div class="action-text">
+              <h4>My Favorites</h4>
+              <p>View your saved restaurants</p>
+            </div>
+            <div class="action-arrow">→</div>
+          </div>
+
+          <div class="action-card" @click="$router.push('/orders')">
+            <div class="action-icon action-orders">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24">
+                <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+                <polyline points="14 2 14 8 20 8"/>
+                <line x1="16" y1="13" x2="8" y2="13"/>
+                <line x1="16" y1="17" x2="8" y2="17"/>
+                <polyline points="10 9 9 9 8 9"/>
+              </svg>
+            </div>
+            <div class="action-text">
+              <h4>My Orders</h4>
+              <p>Track past purchases & history</p>
+            </div>
+            <div class="action-arrow">→</div>
+          </div>
+        </div>
+      </div>
+
     </section>
   </div>
 </template>
@@ -766,6 +802,98 @@ export default {
   border-color: #e2e8f0;
 }
 
+/* ===== Quick Actions ===== */
+.quick-actions {
+  margin-top: 32px;
+}
+
+.section-title {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin-bottom: 16px;
+  letter-spacing: -0.2px;
+}
+
+.actions-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.action-card {
+  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+  border: 1px solid rgba(99, 102, 241, 0.1);
+  border-radius: 20px;
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.action-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 28px rgba(30, 64, 175, 0.1);
+  border-color: rgba(59, 130, 246, 0.3);
+}
+
+.action-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: white;
+}
+
+.action-fav {
+  background: linear-gradient(135deg, #ec4899, #be185d);
+  box-shadow: 0 4px 12px rgba(236, 72, 153, 0.3);
+}
+
+.action-orders {
+  background: linear-gradient(135deg, #10b981, #047857);
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+.action-text {
+  flex: 1;
+}
+
+.action-text h4 {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+.action-text p {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.action-arrow {
+  font-size: 20px;
+  color: var(--text-muted);
+  font-weight: bold;
+  opacity: 0;
+  transform: translateX(-10px);
+  transition: all 0.3s ease;
+}
+
+.action-card:hover .action-arrow {
+  opacity: 1;
+  transform: translateX(0);
+  color: #3b82f6;
+}
+
 /* ===== Responsive ===== */
 @media (max-width: 768px) {
   .profile-hero {
@@ -829,6 +957,11 @@ export default {
   .save-btn,
   .cancel-btn {
     justify-content: center;
+  }
+
+  .actions-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
   }
 }
 

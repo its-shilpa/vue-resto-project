@@ -258,7 +258,7 @@ export default {
             image: this.image.trim(),
           },
         );
-        this.$router.push({ name: "AdminDashboard" });
+        this.$router.push({ name: "AdminDashboard", query: { success: "updated" } });
       } catch (error) {
         console.error("Update failed:", error);
         this.errors.general = "Failed to update restaurant. Try again.";

@@ -5,6 +5,7 @@
       <router-view />
     </main>
     <AppFooter v-if="showLayout" />
+    <ToastMsg ref="toast" />
   </div>
 </template>
 
@@ -14,13 +15,17 @@ import { useRoute } from "vue-router";
 import Headrsec from "./components/Headrsec.vue";
 import AppFooter from "./components/FooterSec.vue";
 import AOS from "aos";
+import ToastMsg from "./components/ToastMsg.vue";
+
 export default {
   name: "App",
   components: {
     Headrsec,
-    AppFooter
+    AppFooter,
+    ToastMsg 
   },
   mounted() {
+    window.$toast = this.$refs.toast; 
     this.$router.afterEach(() => {
       setTimeout(() => {
         AOS.refresh();
@@ -375,6 +380,31 @@ svg {
 
 button {
   transition: all 0.3s ease;
+}
+
+.add-cart-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+.add-cart-btn:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 6px 16px rgba(16, 185, 129, 0.4);
+}
+
+.add-cart-btn svg {
+  margin-top: -1px;
 }
 </style>
 

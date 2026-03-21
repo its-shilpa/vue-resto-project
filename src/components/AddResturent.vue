@@ -247,7 +247,10 @@ export default {
             "https://via.placeholder.com/400x300?text=Restaurant",
         });
 
-        this.$router.push({ name: "AdminDashboard" });
+        this.$router.push({
+        name: "AdminDashboard",
+        query: { success: "added" }
+      });
       } catch (error) {
         console.error("Failed to add:", error);
         this.errors.general = "Failed to add restaurant. Try again.";

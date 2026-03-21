@@ -36,31 +36,64 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
           Profile
         </router-link>
-        <router-link v-if="isLoggedIn" to="/favorites" class="nav-link" @click="menuOpen = false">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
-          My Favourite
-        </router-link>
+
         <router-link v-if="isAdmin" to="/admin-dashboard" class="nav-link" @click="menuOpen = false">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
           Dashboard
         </router-link>
+        <router-link v-if="isLoggedIn" to="/cart" class="nav-link hide-on-mobile" @click="menuOpen = false">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+            <circle cx="9" cy="21" r="1"/>
+            <circle cx="20" cy="21" r="1"/>
+            <path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/>
+          </svg>
+          Cart
+          <span v-if="cartCount > 0" class="cart-badge">
+            {{ cartCount }}
+          </span>
+        </router-link>
+
         <a @click="logout" href="#" class="nav-link nav-link--logout">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
           Logout
         </a>
       </nav>
     </div>
+
+    <!-- Zomato Style Floating Mobile Cart -->
+    <div 
+      v-if="isLoggedIn && cartCount > 0 && !hideFloatingCart" 
+      class="mobile-floating-cart" 
+      @click="goToCart"
+    >
+      <div class="mfc-left">
+        <span class="mfc-items">{{ cartCount }} ITEM{{ cartCount > 1 ? 'S' : '' }}</span>
+        <span class="mfc-divider">|</span>
+        <span class="mfc-total">₹{{ cartTotal }}</span>
+      </div>
+      <div class="mfc-right">
+        <span class="mfc-view">View Cart</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="18" height="18">
+          <circle cx="9" cy="21" r="1"/>
+          <circle cx="20" cy="21" r="1"/>
+          <path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/>
+        </svg>
+      </div>
+    </div>
   </header>
 </template>
 
 <script>
 import AuthService from "@/services/authService";
+import cartService from "@/services/cartService";
 
 export default {
   name: "HeaderSec",
   data() {
     return {
-      menuOpen: false
+      menuOpen: false,
+      cartCount: 0,
+      cartTotal: 0
     };
   },
   computed: {
@@ -70,9 +103,37 @@ export default {
     isAdmin() {
       const user = JSON.parse(localStorage.getItem("user"));
       return user?.role === "admin";
+    },
+    currentUser() {
+    return JSON.parse(localStorage.getItem("user"));
+    },
+    isUser() {
+      return this.currentUser?.role === "user";
+    },
+    hideFloatingCart() {
+      const hiddenRoutes = ["Cart", "Orders"];
+      return hiddenRoutes.includes(this.$route.name);
     }
   },
+  mounted() {
+    this.updateCartCount();
+    // 🔥 update when storage changes (important)
+    window.addEventListener("cart-updated", this.updateCartCount);
+  },
+
+  beforeUnmount() {
+    window.removeEventListener("cart-updated", this.updateCartCount);
+  },
+
   methods: {
+    updateCartCount() {
+      this.cartCount = cartService.getCount();
+      this.cartTotal = cartService.getTotal();
+    },
+    goToCart() {
+      this.menuOpen = false;
+      this.$router.push("/cart");
+    },
     async logout() {
       const user = JSON.parse(localStorage.getItem("user"));
       if (user) {
@@ -158,6 +219,7 @@ export default {
   align-items: center;
   gap: 7px;
   white-space: nowrap;
+  position: relative;
 }
 
 .nav-link svg {
@@ -182,6 +244,38 @@ export default {
 .nav-link.router-link-active svg {
   opacity: 1;
   color: #93c5fd;
+}
+
+.cart-badge {
+  position: absolute;
+  top: 1px;
+  right: -4px;
+
+  min-width: 18px;
+  height: 18px;
+  padding: 0 6px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 11px;
+  font-weight: 700;
+
+  color: white;
+  background: linear-gradient(135deg, #dc44ef, #f59e0b);
+
+  border-radius: 999px;
+
+  box-shadow: 0 4px 10px rgba(255, 77, 79, 0.4);
+
+  border: 2px solid #1e3a8a;
+  animation: pop 0.3s ease;
+}
+
+@keyframes pop {
+  0% { transform: scale(0.7); }
+  100% { transform: scale(1); }
 }
 
 .nav-link--logout:hover {
@@ -236,6 +330,11 @@ export default {
   transform: translateY(-7px) rotate(-45deg);
 }
 
+/* ✅ Hide floating cart on desktop */
+.mobile-floating-cart {
+  display: none !important;
+}
+
 /* ===== Mobile ===== */
 @media (max-width: 768px) {
   .hamburger {
@@ -272,6 +371,69 @@ export default {
     padding: 12px 16px;
     border-radius: 10px;
     font-size: 14px;
+  }
+
+  .nav-link.hide-on-mobile {
+    display: none !important;
+  }
+
+  /* ✅ Show only on mobile */
+  .mobile-floating-cart {
+    display: flex !important;
+    position: fixed;
+    bottom: 16px;
+    left: 16px;
+    right: 16px;
+    background: linear-gradient(135deg, #1e293b, #0f172a);
+    color: white;
+    padding: 14px 20px;
+    border-radius: 12px;
+    z-index: 2000;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 8px 30px rgba(15, 23, 42, 0.4);
+    cursor: pointer;
+    animation: slideUp 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+  }
+
+  @keyframes slideUp {
+    from { transform: translateY(100px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+
+  .mfc-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    font-weight: 800;
+  }
+
+  .mfc-items {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 11px;
+    letter-spacing: 0.5px;
+  }
+
+  .mfc-divider {
+    opacity: 0.5;
+    font-weight: 400;
+  }
+
+  .mfc-total {
+    font-size: 16px;
+  }
+
+  .mfc-right {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
   }
 }
 

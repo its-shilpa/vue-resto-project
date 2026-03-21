@@ -307,8 +307,9 @@ export default {
 
 .favorite-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 22px;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 300px));
+  justify-content: center;
+  gap: 20px;
 }
 
 /* ===== Restaurant Card (Image Overlay) ===== */
@@ -455,8 +456,9 @@ export default {
 
 .favorites-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 22px;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 300px));
+  justify-content: center;
+  gap: 20px;
 }
 
 .dish-card {
@@ -609,11 +611,13 @@ export default {
     font-size: 13px;
   }
   .favorite-grid {
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(260px, 300px));
+    justify-content: center;
     gap: 20px;
   }
   .favorites-grid {
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(260px, 300px));
+    justify-content: center;
     gap: 20px;
   }
   .favorite-item img {

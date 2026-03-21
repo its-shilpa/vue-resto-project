@@ -154,9 +154,10 @@ export default {
 
       try {
         await API.delete(`/resturent/${id}`);
-        this.getResturent();
+        this.resturent = this.resturent.filter(r => r.id !== id);
+        window.$toast.show("🗑️ Restaurant deleted successfully");
       } catch (error) {
-        alert("Failed to delete. Try again.");
+        window.$toast.show("❌ Failed to delete");
       }
     },
 
@@ -166,7 +167,7 @@ export default {
 
       try {
         const result = await API.get("/resturent");
-        this.resturent = result.data;
+        this.resturent = result.data.reverse();
       } catch (err) {
         this.error = "Failed to load restaurants. Please try again.";
       } finally {
@@ -202,6 +203,17 @@ export default {
     this.beforeCreate();
     this.loadData();
     this.getResturent();
+
+    const action = this.$route.query.success;
+
+    if (action) {
+      if (action === "added") window.$toast.show("✅ Restaurant added successfully");
+      if (action === "updated") window.$toast.show("✏️ Restaurant updated successfully");
+
+      const query = { ...this.$route.query };
+      delete query.success;
+      this.$router.replace({ query });
+    }
   },
 
   computed: {

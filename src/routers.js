@@ -11,6 +11,8 @@ import LoggedInUsers from "./components/LoggedInUsers.vue";
 import RestaurantDetails from "./components/RestaurantDetails.vue";
 import FavoritePage from "./components/FavoritePage.vue";
 import AllRestaurants from "./components/AllRestaurants.vue";
+import CartPage from "./components/CartPage.vue";
+import OrderHistory from "./components/OrderHistory.vue";
 
 const routes = [
   {
@@ -76,6 +78,16 @@ const routes = [
     path:"/favorites",
     name:"Favorites",
     component: FavoritePage,
+  },
+  {
+    path: "/cart",
+    name: "Cart",
+    component: CartPage
+  },
+  {
+    path: "/orders",
+    name: "Orders",
+    component: OrderHistory
   },
 
   // Optional: fallback
