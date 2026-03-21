@@ -1,5 +1,5 @@
 <template>
-  <div class="home-page">
+  <div class="home-page" v-if="isReady">
     <!-- Hero Section -->
     <section class="hero">
       <div class="hero-bg"></div>
@@ -14,7 +14,7 @@
         <p class="hero-subtitle">
           Discover and manage restaurants in our growing network
         </p>
-        <div class="hero-search">
+        <div class="hero-search" v-if="!loading">
           <svg
             class="hero-search-icon"
             viewBox="0 0 24 24"
@@ -688,6 +688,9 @@
       </div>
     </section>
   </div>
+  <div v-else class="loading-screen">
+  Loading...
+</div>
 </template>
 
 <script>
@@ -721,6 +724,7 @@ export default {
       favoriteDishes: [],
       allReviews: [],
       Autoplay,
+      isReady: false,
     };
   },
 
@@ -747,6 +751,8 @@ export default {
 
     const user = JSON.parse(localStorage.getItem("user"));
     this.favoriteDishes = user?.favoriteDishes || [];
+
+    this.isReady = true;
   },
 
   methods: {
@@ -995,6 +1001,13 @@ export default {
   transform: translateY(-50%);
   color: rgba(255, 255, 255, 0.4);
   pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.hero-search input:focus + .hero-search-icon,
+.hero-search.loaded .hero-search-icon {
+  opacity: 1;
 }
 
 .hero-search input {
@@ -1873,10 +1886,11 @@ export default {
 
 .home-dishes {
   padding: 40px 0;
+  padding-bottom: 10px;
 }
 
 .home-dishes-swiper {
-  padding-bottom: 40px;
+  padding-bottom: 20px;
 }
 
 /* --- Dish Card --- */

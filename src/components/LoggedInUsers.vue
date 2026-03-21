@@ -72,20 +72,21 @@ export default {
     };
   },
   methods: {
-    async getUsers() {
-      this.loading = true;
+    async getUsers(isInitial = false) {
+      if (isInitial) this.loading = true;
+
       try {
         const result = await API.get("/users");
         this.users = result.data;
       } catch (error) {
         console.error("Failed to fetch users:", error);
       } finally {
-        this.loading = false;
+        if (isInitial) this.loading = false;
       }
     }
   },
   mounted() {
-    this.getUsers();
+    this.getUsers(true);
     this.interval = setInterval(() => {
       this.getUsers();
     }, 10000);

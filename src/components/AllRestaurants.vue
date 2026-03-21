@@ -25,7 +25,7 @@
           {{ filteredRestaurants.length }} Restaurants Near You
         </span>
         <h1>
-          Find Your Perfect<br /><span class="hero-accent">Dining Spot</span>
+          Find Your Perfect<br /><span class="hero-accent"> Dining Spot</span>
         </h1>
         <p>Explore our curated list of top-rated restaurants</p>
         <div class="resto-search-bar">
@@ -86,7 +86,7 @@
           </div>
           <div class="toolbar-text">
             <span class="toolbar-count">{{ filteredRestaurants.length }}</span>
-            <span class="toolbar-label">Restaurants Found</span>
+            <span class="toolbar-label"> Restaurants Found</span>
           </div>
         </div>
         <div class="toolbar-page-badge">
@@ -515,7 +515,7 @@ export default {
 }
 
 .toolbar-text {
-  display: flex;
+  /* display: flex; */
   flex-direction: column;
   gap: 2px;
 }
@@ -532,6 +532,7 @@ export default {
   color: rgba(255, 255, 255, 0.45);
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  padding-left: 5px;
 }
 
 .toolbar-page-badge {
