@@ -281,14 +281,13 @@ export default {
     this.getRestaurants();
   },
 
-  
   methods: {
     async getRestaurants() {
       this.loading = true;
       this.error = null;
       try {
         const result = await API.get("/resturent");
-        this.resturent = result.data.reverse();
+        this.restaurants = result.data.reverse();
       } catch (err) {
         this.error = "Failed to load restaurants. Please try again.";
       } finally {
