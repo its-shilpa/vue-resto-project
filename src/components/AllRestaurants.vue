@@ -305,11 +305,14 @@ export default {
 
   computed: {
     filteredRestaurants() {
-      return this.restaurants.filter(
-        (item) =>
-          item.name.toLowerCase().includes(this.search.toLowerCase()) ||
-          item.address.toLowerCase().includes(this.search.toLowerCase()),
-      );
+      const term = (this.search || "").toLowerCase().trim();
+      if (!term) return this.restaurants;
+
+      return this.restaurants.filter((item) => {
+        const name = (item.name || "").toLowerCase();
+        const addr = (item.address || "").toLowerCase();
+        return name.includes(term) || addr.includes(term);
+      });
     },
 
     paginatedRestaurants() {

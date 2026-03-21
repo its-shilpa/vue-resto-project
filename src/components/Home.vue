@@ -732,7 +732,7 @@ export default {
   data() {
     return {
       name: "",
-      restaurants: [],
+      resturent: [],
       loading: false,
       error: null,
       search: "",
@@ -780,13 +780,13 @@ export default {
 
   methods: {
     //Resturant Cards
-    async getRestaurants() {
+    async getResturent() {
       this.loading = true;
       this.error = null;
 
       try {
         const result = await API.get("/resturent");
-        this.restaurants = result.data.reverse();
+        this.resturent = result.data.reverse();
       } catch (err) {
         this.error = "Failed to load restaurants. Please try again.";
       } finally {
@@ -924,11 +924,14 @@ export default {
 
   computed: {
     filteredRestaurants() {
-      return this.resturent.filter(
-        (item) =>
-          item.name.toLowerCase().includes(this.search.toLowerCase()) ||
-          item.address.toLowerCase().includes(this.search.toLowerCase()),
-      );
+      const term = (this.search || "").toLowerCase().trim();
+      if (!term) return this.resturent;
+
+      return this.resturent.filter((item) => {
+        const name = (item.name || "").toLowerCase();
+        const addr = (item.address || "").toLowerCase();
+        return name.includes(term) || addr.includes(term);
+      });
     },
 
     paginatedRestaurants() {
@@ -942,13 +945,14 @@ export default {
     },
 
     filteredDishes() {
-      if (!this.search.trim()) return [];
+      const term = (this.search || "").toLowerCase().trim();
+      if (!term) return [];
 
-      return this.allPopularDishes.filter(
-        (d) =>
-          d.name.toLowerCase().includes(this.search.toLowerCase()) ||
-          d.restaurant.toLowerCase().includes(this.search.toLowerCase()),
-      );
+      return this.allPopularDishes.filter((d) => {
+        const name = (d.name || "").toLowerCase();
+        const rest = (d.restaurant || "").toLowerCase();
+        return name.includes(term) || rest.includes(term);
+      });
     },
   },
 
