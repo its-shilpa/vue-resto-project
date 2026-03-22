@@ -41,9 +41,24 @@ app.get("/users", (req, res) => {
     users = users.filter(
       (u) => u.email === email && u.password === password
     );
+  } else if (email) {
+    users = users.filter((u) => u.email === email);
   }
 
   res.json(users);
+});
+
+// 🔍 GET USER BY ID
+app.get("/users/:id", (req, res) => {
+  const db = getDB();
+  const id = Number(req.params.id);
+  const user = db.users.find((u) => u.id === id);
+
+  if (user) {
+    res.json(user);
+  } else {
+    res.status(404).json({ error: "User not found" });
+  }
 });
 
 // ➕ CREATE USER (signup)
@@ -148,6 +163,45 @@ app.post("/reviews", (req, res) => {
   res.json(review);
 });
 
+
+// ================= RESTAURANTS API =================
+app.get("/resturent", (req, res) => {
+  const db = getDB();
+  let restaurants = db.resturent || [];
+
+  const { name } = req.query;
+  if (name) {
+    restaurants = restaurants.filter((r) => r.name === name);
+  }
+
+  res.json(restaurants);
+});
+
+app.get("/resturent/:id", (req, res) => {
+  const db = getDB();
+  const id = req.params.id; // Could be string or number based on how it's stored
+  const restaurant = (db.resturent || []).find((r) => String(r.id) === String(id));
+
+  if (restaurant) {
+    res.json(restaurant);
+  } else {
+    res.status(404).json({ error: "Restaurant not found" });
+  }
+});
+
+app.patch("/resturent/:id", (req, res) => {
+  const db = getDB();
+  const id = req.params.id;
+  
+  if (!db.resturent) db.resturent = [];
+  
+  db.resturent = db.resturent.map((r) =>
+    String(r.id) === String(id) ? { ...r, ...req.body } : r
+  );
+
+  saveDB(db);
+  res.json({ success: true });
+});
 
 // ================= SERVER =================
 
