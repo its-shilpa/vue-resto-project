@@ -271,7 +271,10 @@ export default {
 
     try {
       const res = await API.get(`/orders?userId=${user.id}`);
-      this.orders = res.data.map((order) => ({
+      // Safety fallback: manually filter incase deployed backend ignores query params
+      const myOrders = res.data.filter(o => String(o.userId) === String(user.id));
+      
+      this.orders = myOrders.map((order) => ({
         ...order,
         reviewed: order.reviewed || false,
       }));

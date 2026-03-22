@@ -96,7 +96,14 @@ app.patch("/users/:id", (req, res) => {
 
 app.get("/orders", (req, res) => {
   const db = getDB();
-  res.json(db.orders || []);
+  let orders = db.orders || [];
+
+  const { userId } = req.query;
+  if (userId) {
+    orders = orders.filter((o) => String(o.userId) === String(userId));
+  }
+
+  res.json(orders);
 });
 
 app.post("/orders", (req, res) => {
