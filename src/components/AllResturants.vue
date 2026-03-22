@@ -77,6 +77,9 @@
             }"
           >
             <div class="card-image-overlay"></div>
+            <div v-if="item.averageRating > 0" class="resto-rating-badge" style="position: absolute; top: 12px; right: 12px; background: rgba(0, 0, 0, 0.65); backdrop-filter: blur(4px); color: white; padding: 4px 8px; border-radius: 8px; font-size: 13px; font-weight: 700; display: flex; align-items: center; gap: 4px; border: 1px solid rgba(255, 255, 255, 0.1); z-index: 2;">
+              <span style="color: #fbbf24; font-size: 14px;">★</span> {{ item.averageRating.toFixed(1) }}
+            </div>
           </div>
           <div class="restaurant-info">
             <h3 class="restaurant-name" v-html="highlight(item.name)"></h3>
@@ -152,7 +155,14 @@ export default {
       this.error = null;
       try {
         const result = await API.get("/resturent");
-        this.restaurants = result.data;
+        this.restaurants = result.data.map(r => {
+          let avgRating = 0;
+          if (r.reviews && r.reviews.length > 0) {
+            const sum = r.reviews.reduce((acc, rev) => acc + (Number(rev.rating) || 0), 0);
+            avgRating = sum / r.reviews.length;
+          }
+          return { ...r, averageRating: avgRating };
+        });
       } catch (err) {
         this.error = "Failed to load restaurants. Please try again.";
       } finally {

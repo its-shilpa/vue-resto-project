@@ -170,6 +170,9 @@
               }"
             ></div>
             <div class="resto-card-overlay"></div>
+            <div v-if="item.averageRating > 0" class="resto-rating-badge" style="position: absolute; top: 16px; right: 16px; background: rgba(0, 0, 0, 0.65); backdrop-filter: blur(4px); color: white; padding: 6px 10px; border-radius: 10px; font-size: 13px; font-weight: 700; display: flex; align-items: center; gap: 4px; border: 1px solid rgba(255, 255, 255, 0.15); z-index: 3; box-shadow: 0 4px 12px rgba(0,0,0,0.2);">
+              <span style="color: #fbbf24; font-size: 15px;">★</span> {{ item.averageRating.toFixed(1) }}
+            </div>
             <div class="resto-card-inner">
               <span class="resto-card-tag">
                 <svg

@@ -278,6 +278,9 @@
             >
               <div class="card-image-overlay"></div>
               <!-- <div class="card-badge">#{{ item.id }}</div> -->
+              <div v-if="getRestaurantRating(item) > 0" class="resto-rating-badge" style="position: absolute; top: 12px; right: 12px; background: rgba(0, 0, 0, 0.65); backdrop-filter: blur(4px); color: white; padding: 4px 8px; border-radius: 8px; font-size: 13px; font-weight: 700; display: flex; align-items: center; gap: 4px; border: 1px solid rgba(255, 255, 255, 0.1); z-index: 2;">
+                <span style="color: #fbbf24; font-size: 14px;">★</span> {{ getRestaurantRating(item) }}
+              </div>
             </div>
             <div class="restaurant-info">
               <h3 class="restaurant-name">{{ item.name }}</h3>
@@ -420,14 +423,23 @@
                 </svg>
                 {{ dish.restaurant }}
               </p>
-              <button class="add-cart-btn" @click="addToCart(dish)">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14">
-                  <circle cx="9" cy="21" r="1"/>
-                  <circle cx="20" cy="21" r="1"/>
-                  <path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/>
-                </svg>
-                Add to Cart
-              </button>
+              
+              <!-- Review Rating and Cart Button Row -->
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 12px;">
+                <div v-if="dish.avgRating" class="dish-rating-badge" style="display: inline-flex; align-items: center; gap: 4px; background: rgba(251, 191, 36, 0.15); color: #b45309; padding: 4px 10px; border-radius: 8px; font-size: 12px; font-weight: 800; border: 1px solid rgba(251, 191, 36, 0.3);">
+                  <span style="color: #f59e0b; font-size: 14px;">★</span> {{ dish.avgRating }}
+                </div>
+                <div v-else></div>
+
+                <button class="add-cart-btn" style="margin-top: 0;" @click="addToCart(dish)">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14">
+                    <circle cx="9" cy="21" r="1"/>
+                    <circle cx="20" cy="21" r="1"/>
+                    <path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/>
+                  </svg>
+                  Add to Cart
+                </button>
+              </div>
             </div>
           </div>
         </SwiperSlide>
@@ -779,6 +791,12 @@ export default {
   },
 
   methods: {
+    getRestaurantRating(restaurant) {
+      if (!restaurant.reviews || !restaurant.reviews.length) return 0;
+      const total = restaurant.reviews.reduce((sum, r) => sum + Number(r.rating), 0);
+      return (total / restaurant.reviews.length).toFixed(1);
+    },
+
     //Resturant Cards
     async getResturent() {
       this.loading = true;
@@ -839,16 +857,23 @@ export default {
         result.data.forEach((restaurant) => {
           if (restaurant.popularDishes) {
             restaurant.popularDishes.forEach((dish) => {
+              let dishAvg = 0;
+              if (dish.reviews && dish.reviews.length > 0) {
+                const total = dish.reviews.reduce((sum, r) => sum + Number(r.rating), 0);
+                dishAvg = (total / dish.reviews.length).toFixed(1);
+              }
+
               dishes.push({
                 ...dish,
                 restaurant: restaurant.name,
+                avgRating: dishAvg > 0 ? dishAvg : null
               });
             });
           }
         });
         this.allPopularDishes = dishes;
       } catch (error) {
-        console.log("Dish loading error");
+        console.log("Dish loading error", error);
       }
     },
 
@@ -890,6 +915,7 @@ export default {
         const result = await API.get("/resturent");
         const reviews = [];
         result.data.forEach((restaurant) => {
+          // Add Restaurant-level Reviews
           if (restaurant.reviews) {
             restaurant.reviews.forEach((review) => {
               reviews.push({
@@ -898,10 +924,25 @@ export default {
               });
             });
           }
+          // Add Dish-level Reviews
+          if (restaurant.popularDishes) {
+            restaurant.popularDishes.forEach(dish => {
+              if (dish.reviews) {
+                dish.reviews.forEach(review => {
+                  reviews.push({
+                    ...review,
+                    restaurant: dish.name,
+                  });
+                });
+              }
+            });
+          }
         });
-        this.allReviews = reviews;
+        
+        // Randomize or sort if needed
+        this.allReviews = reviews.reverse();
       } catch (error) {
-        console.log("Review loading error");
+        console.log("Review loading error", error);
       }
     },
 

@@ -165,10 +165,69 @@
 
           <!-- Order Footer -->
           <div class="order-footer">
-            <div class="total-label">Total Amount</div>
-            <div class="total-price">₹{{ order.total }}</div>
+            <div class="total-section">
+              <div class="total-label">Total Amount</div>
+              <div class="total-price">₹{{ order.total }}</div>
+            </div>
+            <div class="order-review">
+              <button
+                class="review-btn"
+                v-if="!order.reviewed"
+                @click="openReview(order)"
+                :disabled="!isDelivered(order)"
+              >
+                <span class="star-icon">⭐</span> Write Review
+              </button>
+              <button
+                class="review-btn reviewed-btn"
+                v-else
+                disabled
+              >
+                <span class="check-icon">✓</span> Reviewed
+              </button>
+            </div>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+  <div v-if="showReviewModal" class="review-modal-overlay">
+    <div class="review-modal-content">
+      <div class="modal-header">
+        <h3>Write a Review</h3>
+        <button class="close-btn" @click="showReviewModal = false">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <div class="form-group">
+          <label>Rating</label>
+          <div class="star-rating-select">
+            <button 
+              v-for="n in 5" 
+              :key="n" 
+              class="star-btn" 
+              :class="{ active: review.rating >= n }"
+              @click="review.rating = n"
+            >
+              ★
+            </button>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Comment</label>
+          <textarea v-model="review.comment" placeholder="Share your experience..."></textarea>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="cancel-btn" @click="showReviewModal = false">Cancel</button>
+        <button class="submit-btn" @click="submitReview" :disabled="!review.rating || !review.comment">Submit Review</button>
       </div>
     </div>
   </div>
@@ -183,6 +242,13 @@ export default {
     return {
       orders: [],
       loading: true,
+
+      showReviewModal: false,
+      selectedOrder: null,
+      review: {
+        rating: "",
+        comment: "",
+      },
     };
   },
 
@@ -205,7 +271,10 @@ export default {
 
     try {
       const res = await API.get(`/orders?userId=${user.id}`);
-      this.orders = res.data;
+      this.orders = res.data.map((order) => ({
+        ...order,
+        reviewed: order.reviewed || false,
+      }));
     } catch (error) {
       console.error("Failed to load orders:", error);
     } finally {
@@ -237,6 +306,98 @@ export default {
       if (s === "placed" || s === "pending") return "status-warning";
       if (s === "cancelled") return "status-danger";
       return "status-default";
+    },
+
+    isDelivered(order) {
+      return ["placed", "delivered", "completed"].includes(order.status.toLowerCase());
+    },
+
+    openReview(order) {
+      this.selectedOrder = order;
+      this.showReviewModal = true;
+    },
+
+    async submitReview() {
+      const user = JSON.parse(localStorage.getItem("user"));
+
+      if (!this.review.rating || !this.review.comment) {
+        alert("Please fill all fields");
+        return;
+      }
+
+      try {
+        const existingRes = await API.get("/reviews");
+        const alreadyReviewed = existingRes.data.some(r => r.orderId === this.selectedOrder.id);
+
+        if (alreadyReviewed) {
+          alert("You already reviewed this order");
+          return;
+        }
+
+        await API.post("/reviews", {
+          orderId: this.selectedOrder.id,
+          restaurantId: this.selectedOrder.items[0]?.restaurant, // or restaurantId if exists
+          userId: user.id,
+          rating: this.review.rating,
+          comment: this.review.comment,
+          createdAt: new Date(),
+        });
+
+        // ✅ Add review to the specific ordered dishes
+        const restNames = [...new Set(this.selectedOrder.items.map(i => i.restaurant).filter(Boolean))];
+        
+        for (const restName of restNames) {
+          const restRes = await API.get(`/resturent?name=${restName}`);
+          const restaurant = restRes.data[0];
+          
+          if (restaurant && restaurant.popularDishes) {
+            let dishesUpdated = false;
+            const itemsForRest = this.selectedOrder.items.filter(i => i.restaurant === restName);
+            const itemNames = itemsForRest.map(i => i.name);
+            
+            const updatedDishes = restaurant.popularDishes.map(dish => {
+              if (itemNames.includes(dish.name)) {
+                dishesUpdated = true;
+                const newReview = {
+                  user: user.name,
+                  rating: this.review.rating,
+                  comment: this.review.comment
+                };
+                return {
+                  ...dish,
+                  reviews: [...(dish.reviews || []), newReview]
+                };
+              }
+              return dish;
+            });
+            
+            if (dishesUpdated) {
+              await API.patch(`/resturent/${restaurant.id}`, {
+                popularDishes: updatedDishes
+              });
+            }
+          }
+        }
+
+        // ✅ Persist reviewed status
+        await API.patch(`/orders/${this.selectedOrder.id}`, {
+          reviewed: true,
+        });
+
+        this.selectedOrder.reviewed = true;
+
+        // ✅ Reset form
+        this.review = { rating: "", comment: "" };
+        this.showReviewModal = false;
+
+        if (window.$toast) {
+          window.$toast.show("⭐ Review submitted successfully!");
+        } else {
+          alert("Review submitted successfully!");
+        }
+      } catch (err) {
+        console.error(err);
+      }
     },
   },
 };
@@ -348,7 +509,8 @@ export default {
 }
 
 .orders-title span {
-  background: linear-gradient(135deg, #3b82f6, #60a5fa);
+  /* background: linear-gradient(135deg, #3b82f6, #60a5fa); */
+  background: linear-gradient(135deg, #fbbf24, #f59e0b);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -557,25 +719,86 @@ export default {
 /* Footer */
 .order-footer {
   padding: 20px 24px;
-  background: linear-gradient(180deg, #f8ecec 0%, #fffcf3 100%);
-  border-top: 1px solid var(--border);
+  background: linear-gradient(180deg, #fdfbfb 0%, #fffcf3 100%);
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
+.total-section {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
 .total-label {
-  font-size: 14px;
-  font-weight: 600;
-  color: #d97706;
+  font-size: 13px;
+  font-weight: 700;
+  color: #94a3b8;
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
 
 .total-price {
-  font-size: 20px;
-  font-weight: 800;
+  font-size: 22px;
+  font-weight: 900;
   color: #ef4444;
+  line-height: 1;
+}
+
+/* ===== Review Button ===== */
+.review-btn {
+  /* background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); */
+  background: linear-gradient(135deg, #1e40af, #3b82f6);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 12px rgba(11, 155, 245, 0.25);
+}
+
+.review-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(11, 167, 245, 0.4);
+}
+
+.review-btn:disabled {
+  background: #f1f5f9;
+  color: #94a3b8;
+  cursor: not-allowed;
+  box-shadow: none;
+  border: 1px solid #e2e8f0;
+}
+
+.review-btn .star-icon {
+  font-size: 15px;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+}
+
+.reviewed-btn {
+  background: #f0fdf4 !important;
+  color: #166534 !important;
+  border: 1px solid #bbf7d0 !important;
+  pointer-events: none;
+}
+
+.reviewed-btn .check-icon {
+  background: #22c55e;
+  color: white;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
 }
 
 /* ===== Empty State ===== */
@@ -659,5 +882,180 @@ export default {
     flex-basis: 100%;
     margin-left: 0;
   }
+}
+
+/* ===== Review Modal Premium Styles ===== */
+.review-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.review-modal-content {
+  background: white;
+  width: 100%;
+  max-width: 450px;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  animation: modalFadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.modal-header {
+  padding: 24px 24px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--border);
+}
+
+.modal-header h3 {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.close-btn {
+  background: rgba(0, 0, 0, 0.04);
+  border: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--text-secondary);
+  transition: all 0.2s ease;
+}
+
+.close-btn:hover {
+  background: rgba(0, 0, 0, 0.08);
+  color: var(--text-primary);
+}
+
+.modal-body {
+  padding: 24px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+}
+
+.star-rating-select {
+  display: flex;
+  gap: 8px;
+}
+
+.star-btn {
+  background: none;
+  border: none;
+  font-size: 32px;
+  color: #e2e8f0;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  line-height: 1;
+  padding: 0;
+}
+
+.star-btn:hover,
+.star-btn.active {
+  color: #fbbf24;
+  transform: scale(1.1);
+}
+
+.form-group textarea {
+  width: 100%;
+  min-height: 120px;
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  font-family: inherit;
+  font-size: 15px;
+  resize: vertical;
+  background: #f8fafc;
+  transition: all 0.2s ease;
+  color: var(--text-primary);
+}
+
+.form-group textarea:focus {
+  outline: none;
+  border-color: #3b82f6;
+  background: white;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+}
+
+.modal-footer {
+  padding: 16px 24px 24px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.cancel-btn {
+  padding: 12px 20px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: white;
+  font-weight: 600;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.cancel-btn:hover {
+  background: #f1f5f9;
+  color: var(--text-primary);
+}
+
+.submit-btn {
+  padding: 12px 24px;
+  border-radius: 10px;
+  border: none;
+  background: var(--primary-gradient);
+  font-weight: 700;
+  color: white;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 14px rgba(59, 130, 246, 0.3);
+}
+
+.submit-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+}
+
+.submit-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
 }
 </style>

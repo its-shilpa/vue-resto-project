@@ -660,7 +660,7 @@ export default {
 }
 
 .browse-btn {
-  background: var(--text-primary);
+  background: linear-gradient(135deg, #1e40af, #3b82f6);
   color: white;
   border: none;
   padding: 12px 28px;

@@ -210,12 +210,17 @@
                 <span class="dish-price-tag">₹{{ dish.price }}</span>
               </div>
               <div class="dish-info-bottom">
-                <span class="dish-popular-tag" v-if="dish.popular">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="11" height="11">
-                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                  </svg>
-                  Popular
-                </span>
+                <div style="display: flex; gap: 6px; align-items: center;">
+                  <span class="dish-popular-tag" v-if="dish.popular">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="11" height="11">
+                      <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                    </svg>
+                    Popular
+                  </span>
+                  <span v-if="getDishRating(dish) > 0" class="dish-rating-tag" style="background: rgba(251, 191, 36, 0.15); color: #b45309; padding: 4px 8px; border-radius: 6px; font-size: 12px; font-weight: 700; border: 1px solid rgba(251, 191, 36, 0.3); display: flex; align-items: center; gap: 4px;">
+                    <span style="color: #f59e0b; font-size: 14px;">★</span> {{ getDishRating(dish) }}
+                  </span>
+                </div>
                 <span style="flex:1"></span>
                 <button class="add-cart-btn" @click.stop="addToCart(dish)">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14">
@@ -493,6 +498,12 @@ export default {
       }
 
       this.isFavorite = loggedUser.favorites.includes(this.restaurant.id);
+    },
+
+    getDishRating(dish) {
+      if (!dish.reviews || !dish.reviews.length) return 0;
+      const total = dish.reviews.reduce((sum, r) => sum + Number(r.rating), 0);
+      return (total / dish.reviews.length).toFixed(1);
     },
 
     async addReview() {
