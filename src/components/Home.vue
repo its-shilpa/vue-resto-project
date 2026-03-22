@@ -813,7 +813,7 @@ export default {
     },
 
     async loadData() {
-      const user = localStorage.getItem("user");
+      const user = JSON.parse(localStorage.getItem("user"));
       if (!user) {
         this.$router.push({ name: "SignUp" });
         return;

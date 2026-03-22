@@ -114,21 +114,28 @@ const router = createRouter({
 
 // ✅ Global Auth + Role Guard (Single Source of Truth)
 router.beforeEach((to, from, next) => {
-  const user = JSON.parse(localStorage.getItem("user")); // must match authService.js
+  const storedUser = localStorage.getItem("user");
+  const user = storedUser ? JSON.parse(storedUser) : null;
 
-  // If route requires auth and user is not logged in → go to login
-  if (to.meta.requiresAuth && !user) {
+  // ✅ Check BOTH existence + login state
+  const isAuthenticated = user && user.isLoggedIn;
+
+  // 🔒 Protected routes
+  if (to.meta.requiresAuth && !isAuthenticated) {
     return next({ name: "Login" });
   }
 
-  // If route is admin-only and user is not admin → go home
+  // 🔒 Admin routes
   if (to.meta.adminOnly && user?.role !== "admin") {
     return next({ name: "Home" });
   }
 
-  // Prevent logged-in users from accessing Login page
-  if (to.name === "Login" && user) {
-    return next(user.role === "admin" ? { name: "AdminDashboard" } : { name: "Home" });
+  // 🚫 Prevent logged-in users from visiting login
+  if (to.name === "Login" && isAuthenticated) {
+    return next(user.role === "admin"
+      ? { name: "AdminDashboard" }
+      : { name: "Home" }
+    );
   }
 
   next();
