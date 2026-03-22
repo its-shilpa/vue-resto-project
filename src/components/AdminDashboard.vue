@@ -191,7 +191,7 @@ export default {
       }
 
       try {
-        const parsedUser = JSON.parse(user);
+        const parsedUser = user;
         this.name = parsedUser.name || "";
       } catch (e) {
         console.error("Invalid user data", e);

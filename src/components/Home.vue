@@ -819,14 +819,14 @@ export default {
         return;
       }
       try {
-        const parsedUser = JSON.parse(user);
-        // 🔥 verify from backend
-        const res = await API.get(`/users/${parsedUser.id}`);
+        const parsedUser = user;
+        // 🔥 verify from backend (Compatible with older deployed server.js)
+        const res = await API.get(`/users?email=${parsedUser.email}&password=${parsedUser.password}`);
 
-        if (!res.data) {
+        if (!res.data || res.data.length === 0) {
           throw new Error("User not found");
         }
-        this.name = res.data.name;
+        this.name = res.data[0].name;
       } catch (e) {
         console.error("Invalid user → logging out", e);
         localStorage.removeItem("user"); // 🔥 clear fake login

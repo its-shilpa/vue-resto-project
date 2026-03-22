@@ -184,11 +184,11 @@ export default {
       this.loading = true;
 
       try {
-        const exists = await API.get(
-          `/users?email=${this.email}`
-        );
+        const response = await API.get("/users");
+        // Verify via Client-side to support legacy Backend
+        const isTaken = response.data.some(u => u.email === this.email);
 
-        if (exists.data.length) {
+        if (isTaken) {
           this.errors.email = "Email already registered";
           return;
         }

@@ -51,8 +51,8 @@ app.get("/users", (req, res) => {
 // 🔍 GET USER BY ID
 app.get("/users/:id", (req, res) => {
   const db = getDB();
-  const id = Number(req.params.id);
-  const user = db.users.find((u) => u.id === id);
+  const id = req.params.id; // Usually a string
+  const user = db.users.find((u) => String(u.id) === String(id));
 
   if (user) {
     res.json(user);
@@ -80,10 +80,10 @@ app.post("/users", (req, res) => {
 // ✏️ UPDATE USER (login/logout)
 app.patch("/users/:id", (req, res) => {
   const db = getDB();
-  const id = Number(req.params.id);
+  const id = req.params.id;
 
   db.users = db.users.map((u) =>
-    u.id === id ? { ...u, ...req.body } : u
+    String(u.id) === String(id) ? { ...u, ...req.body } : u
   );
 
   saveDB(db);
@@ -117,10 +117,10 @@ app.post("/orders", (req, res) => {
 
 app.patch("/orders/:id", (req, res) => {
   const db = getDB();
-  const id = Number(req.params.id);
+  const id = req.params.id;
 
   db.orders = db.orders.map((o) =>
-    o.id === id ? { ...o, ...req.body } : o
+    String(o.id) === String(id) ? { ...o, ...req.body } : o
   );
 
   saveDB(db);
