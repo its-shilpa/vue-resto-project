@@ -380,6 +380,10 @@ export default {
 </script>
 
 <style scoped>
+.all-resto-page {
+  overflow-x: hidden;
+}
+
 /* ===== Hero Banner ===== */
 .resto-hero {
   position: relative;
@@ -964,6 +968,16 @@ export default {
     flex-wrap: wrap;
     justify-content: center;
     margin-right: 0;
+    width: 100%;
+  }
+  .filter-select {
+    flex: 1;
+    min-width: 0;
+    max-width: 48%;
+  }
+  .resto-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
   }
   .resto-card {
     height: 300px;

@@ -82,13 +82,19 @@ app.patch("/users/:id", (req, res) => {
   const db = getDB();
   const id = req.params.id;
 
-  db.users = db.users.map((u) =>
-    String(u.id) === String(id) ? { ...u, ...req.body } : u
-  );
+  let updatedUser = null;
+  db.users = db.users.map((u) => {
+    if (String(u.id) === String(id)) {
+      updatedUser = { ...u, ...req.body };
+      return updatedUser;
+    }
+    return u;
+  });
 
   saveDB(db);
 
-  res.json({ success: true });
+  // Return the full updated user so the frontend can sync correctly
+  res.json(updatedUser || { success: true });
 });
 
 

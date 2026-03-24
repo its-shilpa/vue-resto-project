@@ -379,11 +379,28 @@ export default {
           updatePayload,
         );
 
+        // res.data is now the full updated user from backend
         const updatedUser = { ...this.userData, ...res.data };
+        
+        // Save to localStorage
         localStorage.setItem("user", JSON.stringify(updatedUser));
-        this.userData = updatedUser;
-        this.isEditing = false;
+
+        // Update userData fields one by one to keep Vue reactivity
+        this.userData.name = updatedUser.name;
+        this.userData.email = updatedUser.email;
+        if (updatePayload.password) {
+          this.userData.password = updatedUser.password;
+        }
+
+        // Keep editData in sync
+        this.editData.name = updatedUser.name;
+        this.editData.email = updatedUser.email;
         this.editData.password = "";
+
+        this.isEditing = false;
+
+        // Notify other components (e.g. header)
+        window.dispatchEvent(new Event("user-updated"));
       } catch (error) {
         console.error("Update failed:", error);
         alert("Failed to update profile.");
@@ -398,6 +415,11 @@ export default {
 </script>
 
 <style scoped>
+/* ===== Page Root ===== */
+.profile-page {
+  overflow-x: hidden;
+}
+
 /* ===== Hero ===== */
 .profile-hero {
   position: relative;

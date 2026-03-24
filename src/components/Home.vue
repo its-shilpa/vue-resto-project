@@ -1013,6 +1013,11 @@ export default {
 </script>
 
 <style scoped>
+/* ===== Page Root ===== */
+.home-page {
+  overflow-x: hidden;
+}
+
 /* ===== Hero ===== */
 .hero {
   position: relative;

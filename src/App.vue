@@ -107,6 +107,7 @@ export default {
 html {
   scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
+  overflow-x: hidden;
 }
 
 body {
@@ -117,6 +118,7 @@ body {
   background: var(--bg-page);
   line-height: 1.6;
   min-height: 100vh;
+  overflow-x: hidden;
 }
 
 #app {
