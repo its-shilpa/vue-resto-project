@@ -278,7 +278,7 @@
             >
               <div class="card-image-overlay"></div>
               <!-- <div class="card-badge">#{{ item.id }}</div> -->
-              <div v-if="getRestaurantRating(item) > 0" class="resto-rating-badge" style="position: absolute; top: 12px; right: 12px; background: rgba(0, 0, 0, 0.65); backdrop-filter: blur(4px); color: white; padding: 4px 8px; border-radius: 8px; font-size: 13px; font-weight: 700; display: flex; align-items: center; gap: 4px; border: 1px solid rgba(255, 255, 255, 0.1); z-index: 2;">
+              <div v-if="getRestaurantRating(item) > 0" class="resto-rating-badge" style="position: absolute; top: 12px; right: 12px; background: rgba(0, 0, 0, 0.8); color: white; padding: 4px 8px; border-radius: 8px; font-size: 13px; font-weight: 700; display: flex; align-items: center; gap: 4px; border: 1px solid rgba(255, 255, 255, 0.1); z-index: 2;">
                 <span style="color: #fbbf24; font-size: 14px;">★</span> {{ getRestaurantRating(item) }}
               </div>
             </div>
@@ -1109,8 +1109,7 @@ export default {
   width: 100%;
   height: 52px;
   padding: 0 20px 0 50px;
-  background: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(12px);
+  background: rgba(255, 255, 255, 0.15); /* Replaced backdrop-filter with more opaque bg */
   border: 1px solid rgba(255, 255, 255, 0.15);
   border-radius: 14px;
   color: white;
@@ -1141,8 +1140,7 @@ export default {
   align-items: center;
   gap: 20px;
   padding: 14px 28px;
-  background: rgba(255, 255, 255, 0.06);
-  backdrop-filter: blur(8px);
+  background: rgba(255, 255, 255, 0.12); /* Replaced backdrop-filter */
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 12px;
 }
@@ -1277,8 +1275,7 @@ export default {
   position: relative;
   padding: 24px;
   border-radius: 24px;
-  background: rgba(255, 255, 255, 0.55);
-  backdrop-filter: blur(12px);
+  background: rgba(255, 255, 255, 0.95); /* Better performance than backdrop blur */
   border: 1px solid rgba(99, 102, 241, 0.12);
   box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06),
     inset 0 1px 0 rgba(255, 255, 255, 0.6);
@@ -1296,6 +1293,7 @@ export default {
   box-shadow: 0 6px 16px rgba(15, 23, 42, 0.08),
     inset 0 1px 0 rgba(255, 255, 255, 0.8);
   overflow: hidden;
+  will-change: transform, box-shadow;
   transition: transform 0.35s ease, box-shadow 0.35s ease,
     border-color 0.35s ease;
   cursor: pointer;
@@ -1338,6 +1336,7 @@ export default {
   background-position: center;
   background-color: #e2e8f0;
   position: relative;
+  will-change: transform, filter;
   transition: transform 0.5s ease, filter 0.5s ease;
   overflow: hidden;
 }

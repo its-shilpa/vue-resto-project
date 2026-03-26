@@ -3,7 +3,11 @@
     <!-- Hero -->
     <section class="form-hero">
       <div class="form-hero-bg"></div>
-      <div class="form-hero-content" data-aos="fade-down" data-aos-duration="800">
+      <div
+        class="form-hero-content"
+        data-aos="fade-down"
+        data-aos-duration="800"
+      >
         <router-link to="/admin-dashboard" class="back-link">
           <svg
             viewBox="0 0 24 24"
@@ -237,7 +241,7 @@ export default {
       this.errors.general = "";
 
       try {
-        await API.post("/resturent", {
+        await API.post("/restaurant", {
           name: this.name.trim(),
           contact: this.contact.trim(),
           address: this.address.trim(),

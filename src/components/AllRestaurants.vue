@@ -170,7 +170,7 @@
               }"
             ></div>
             <div class="resto-card-overlay"></div>
-            <div v-if="item.averageRating > 0" class="resto-rating-badge" style="position: absolute; top: 16px; right: 16px; background: rgba(0, 0, 0, 0.65); backdrop-filter: blur(4px); color: white; padding: 6px 10px; border-radius: 10px; font-size: 13px; font-weight: 700; display: flex; align-items: center; gap: 4px; border: 1px solid rgba(255, 255, 255, 0.15); z-index: 3; box-shadow: 0 4px 12px rgba(0,0,0,0.2);">
+            <div v-if="item.averageRating > 0" class="resto-rating-badge" style="position: absolute; top: 16px; right: 16px; background: rgba(0, 0, 0, 0.85); color: white; padding: 6px 10px; border-radius: 10px; font-size: 13px; font-weight: 700; display: flex; align-items: center; gap: 4px; border: 1px solid rgba(255, 255, 255, 0.15); z-index: 3; box-shadow: 0 4px 12px rgba(0,0,0,0.2);">
               <span style="color: #fbbf24; font-size: 15px;">★</span> {{ item.averageRating.toFixed(1) }}
             </div>
             <div class="resto-card-inner">
@@ -483,8 +483,7 @@ export default {
   width: 100%;
   height: 52px;
   padding: 0 48px 0 50px;
-  background: rgba(255, 255, 255, 0.07);
-  backdrop-filter: blur(12px);
+  background: rgba(255, 255, 255, 0.15);
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 16px;
   color: white;
@@ -564,8 +563,7 @@ export default {
   padding: 10px 42px 10px 20px;
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 20px;
-  background-color: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(8px);
+  background-color: rgba(255, 255, 255, 0.12);
   color: #fff;
   font-family: inherit;
   font-size: 14px;
@@ -737,6 +735,7 @@ export default {
   overflow: hidden;
   cursor: pointer;
   border: 2px solid transparent;
+  will-change: transform, border-color, box-shadow;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -745,6 +744,7 @@ export default {
   inset: 0;
   background-size: cover;
   background-position: center;
+  will-change: transform, filter;
   transition: transform 0.6s ease, filter 0.6s ease;
 }
 

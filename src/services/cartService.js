@@ -28,6 +28,11 @@ export default {
     localStorage.setItem(CART_KEY, JSON.stringify(cart));
     },
 
+  removeDishFromAllCarts(dishName, restaurantName) {
+    const cart = this.getCart().filter(i => !(i.name === dishName && i.restaurant === restaurantName));
+    localStorage.setItem(CART_KEY, JSON.stringify(cart));
+  },
+
   clearCart() {
     localStorage.removeItem(CART_KEY);
   },

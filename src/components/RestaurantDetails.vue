@@ -601,6 +601,7 @@ export default {
 
     async deleteDish() {
       const updatedDishes = [...this.restaurant.popularDishes];
+      const deletedDish = updatedDishes[this.deleteIndex];
       updatedDishes.splice(this.deleteIndex, 1);
 
       await API.patch(
@@ -610,6 +611,11 @@ export default {
 
       this.restaurant.popularDishes = updatedDishes;
       this.showDeleteModal = false;
+
+      if (deletedDish) {
+        cartService.removeDishFromAllCarts(deletedDish.name, this.restaurant.name);
+        window.dispatchEvent(new Event("cart-updated"));
+      }
     },
 
     resetDishForm() {

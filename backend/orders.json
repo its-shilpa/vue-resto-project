@@ -1,0 +1,65 @@
+[
+  {
+    "id": "1774464331560",
+    "userId": "test123",
+    "items": [
+      {
+        "name": "Biryani",
+        "price": 250,
+        "qty": 2
+      }
+    ],
+    "total": 500,
+    "status": "placed",
+    "reviewed": false,
+    "createdAt": "2026-03-25T18:45:31.560Z"
+  },
+  {
+    "id": "1774464696544",
+    "userId": "fd37",
+    "items": [
+      {
+        "id": 32,
+        "name": "Test PizzaSample Dish",
+        "price": 500100,
+        "image": "https://via.placeholder.com/150",
+        "restaurant": "Test",
+        "qty": 1
+      }
+    ],
+    "total": 500130,
+    "shippingAddress": {
+      "name": "Shilpa Test",
+      "phone": "9876543210",
+      "address": "123 Test Street, Kolkata",
+      "pincode": "700001"
+    },
+    "status": "placed",
+    "createdAt": "2026-03-25T18:51:36.546Z",
+    "reviewed": false
+  },
+  {
+    "id": "1774541683857",
+    "userId": "fd37",
+    "items": [
+      {
+        "id": 30,
+        "name": "Chicken Balls",
+        "price": 159,
+        "image": "https://images.pexels.com/photos/12349437/pexels-photo-12349437.jpeg",
+        "restaurant": "Unknown",
+        "qty": 1
+      }
+    ],
+    "total": 214,
+    "shippingAddress": {
+      "name": "Shilpa Mukherjee",
+      "phone": "06294094588",
+      "address": "Adventz Infinity Building, Bandhan Bank Head office, Near Technopolish, Saltlake, Sector-v",
+      "pincode": "700091"
+    },
+    "status": "placed",
+    "createdAt": "2026-03-26T16:14:43.857Z",
+    "reviewed": true
+  }
+]
