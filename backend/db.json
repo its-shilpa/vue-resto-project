@@ -146,6 +146,13 @@
           "price": 499,
           "image": "https://images.pexels.com/photos/18601877/pexels-photo-18601877.jpeg"
         }
+      ],
+      "reviews": [
+        {
+          "user": "Ritika Banerjee",
+          "rating": 5,
+          "comment": "Delevary on time" 
+        }
       ]
     },
     {
