@@ -558,8 +558,8 @@ export default {
       }
 
       const updatedDishes = [
-        ...this.restaurant.popularDishes,
         { ...this.newDish, price: Number(this.newDish.price) },
+        ...this.restaurant.popularDishes,
       ];
 
       await API.patch(
