@@ -207,11 +207,11 @@ export default {
       if (field === 'phone') {
         const phoneRegex = /^[0-9]{10,15}$/;
         if (!this.form.phone.trim()) this.errors.phone = "Phone number is required";
-        else if (!phoneRegex.test(this.form.phone.replace(/[\s-]/g, ''))) this.errors.phone = "Please enter a valid 10+ digit phone number";
+        else if (!phoneRegex.test(this.form.phone.replace(/[\s-]/g, ''))) this.errors.phone = "Please enter a valid phone number";
         else this.errors.phone = null;
       }
       if (field === 'address') {
-        if (!this.form.address.trim() || this.form.address.trim().length < 5) this.errors.address = "Please enter a complete delivery address";
+        if (!this.form.address.trim() || this.form.address.trim().length < 4) this.errors.address = "Please enter a complete delivery address";
         else this.errors.address = null;
       }
       if (field === 'pincode') {
