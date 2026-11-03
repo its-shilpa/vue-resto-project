@@ -233,7 +233,6 @@ export default {
       this.validateField('pincode');
       return !this.errors.name && !this.errors.phone && !this.errors.address && !this.errors.pincode;
     },
-    
     async placeOrder() {
       if (!this.validateAll()) return;
       if (!this.isFormValid) return;
